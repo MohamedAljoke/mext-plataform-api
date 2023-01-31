@@ -2,8 +2,8 @@ import Chapter from "App/Models/Chapter";
 
 export default class ChapterServices {
   constructor() {}
-  public async fetchSubjectsService(): Promise<Chapter[]> {
-    return await Chapter.query();
+  public async fetchChaptersService(subjectId: number): Promise<Chapter[]> {
+    return await Chapter.query().where({ subjectId });
   }
   public async getChapterService(id: number) {
     return await Chapter.find(id);

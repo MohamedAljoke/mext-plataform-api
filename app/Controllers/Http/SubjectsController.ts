@@ -72,8 +72,7 @@ export default class SubjectsController {
         id,
         subjectName: subjectName,
       });
-
-      return updatedResponse<Subject>(response, updatedSubject);
+      return updatedResponse(response, updatedSubject);
     } catch (error) {
       console.log("update subject error", error);
       return serverErrorResponse(response);

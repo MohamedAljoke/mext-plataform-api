@@ -10,12 +10,10 @@ export default class extends BaseSchema {
         .integer("subject_id")
         .unsigned()
         .references("id")
-        .inTable("subjects");
-      table.string("chapter_name");
+        .inTable("subjects")
+        .onDelete("CASCADE");
 
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
+      table.string("chapter_name");
       table.dateTime("created_at", { useTz: true }).notNullable();
       table.dateTime("updated_at", { useTz: true }).notNullable();
     });

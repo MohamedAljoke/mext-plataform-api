@@ -1,4 +1,5 @@
 import Subject from "App/Models/Subject";
+import { subjectSerializer } from "App/Serializer/SubjectsSerializer";
 
 export default class SubjectsServices {
   constructor() {}
@@ -23,7 +24,8 @@ export default class SubjectsServices {
   }) {
     const subject = await Subject.findOrFail(id);
     const updatedSubject = await subject.merge({ ...{ subjectName } }).save();
-    return updatedSubject;
+    const serialized = updatedSubject.serialize(subjectSerializer);
+    return serialized;
   }
   public async createSubjectService(subject: string): Promise<Subject> {
     return await Subject.create({ subjectName: subject });

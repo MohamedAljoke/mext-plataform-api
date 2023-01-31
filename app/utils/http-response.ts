@@ -22,7 +22,7 @@ export const createdResponse = <T>(res: ResponseContract, body: T) => {
   return res.status(httpStatusCode.CREATED).send(body);
 };
 export const updatedResponse = <T>(res: ResponseContract, body: T) => {
-  return res.status(httpStatusCode.UPDATED).send(body);
+  return res.status(httpStatusCode.OK).send(body);
 };
 
 export const notAllowed = (res: ResponseContract, errorMessage: string) => {

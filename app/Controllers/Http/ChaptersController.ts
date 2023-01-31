@@ -1,6 +1,10 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { inject } from "@adonisjs/fold";
-import { createdResponse, serverErrorResponse } from "App/utils/http-response";
+import {
+  createdResponse,
+  serverErrorResponse,
+  successResponse,
+} from "App/utils/http-response";
 import ChapterValidator from "App/Validators/ChapterValidator";
 import ChapterServices from "App/Services/ChapterServices";
 import Chapter from "App/Models/Chapter";
@@ -11,6 +15,10 @@ export default class ChaptersController {
   public async fetchChapters({ request, response }: HttpContextContract) {
     const { subjectId } = request.params();
     try {
+      const chapters = await this.chapterServices.fetchChaptersService(
+        subjectId
+      );
+      return successResponse<Chapter[]>(response, chapters);
     } catch (error) {
       console.log("fetch chapters error", error);
       return serverErrorResponse(response);
