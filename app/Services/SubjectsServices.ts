@@ -3,7 +3,9 @@ import Subject from "App/Models/Subject";
 export default class SubjectsServices {
   constructor() {}
   public async fetchSubjectsService(): Promise<Subject[]> {
-    return await Subject.query();
+    const subjects = await Subject.query();
+    await Promise.all(subjects.map((subject) => subject.load("chapters")));
+    return subjects;
   }
   public async getSubjectService(id: number) {
     return await Subject.find(id);

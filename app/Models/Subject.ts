@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
-import { BaseModel, column } from "@ioc:Adonis/Lucid/Orm";
+import { BaseModel, HasMany, column, hasMany } from "@ioc:Adonis/Lucid/Orm";
+import Chapter from "./Chapter";
 
 export default class Subject extends BaseModel {
   @column({ isPrimary: true })
@@ -7,6 +8,11 @@ export default class Subject extends BaseModel {
 
   @column()
   public subjectName: string;
+
+  @hasMany(() => Chapter, {
+    foreignKey: "subjectId",
+  })
+  public chapters: HasMany<typeof Chapter>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
