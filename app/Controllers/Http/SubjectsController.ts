@@ -3,7 +3,11 @@ import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Subject from "App/Models/Subject";
 import SubjectsServices from "App/Services/SubjectsServices";
 import SubjectValidator from "App/Validators/SubjectValidator";
-import { createdResponse, serverErrorResponse } from "App/utils/http-response";
+import {
+  createdResponse,
+  serverErrorResponse,
+  badRequestResponse,
+} from "App/utils/http-response";
 
 //so that we can inject the service in the class
 @inject()
@@ -13,6 +17,19 @@ export default class SubjectsController {
     try {
       const subjects = await this.subjectsServices.fetchSubjectsService();
       return createdResponse<Subject[]>(response, subjects);
+    } catch (error) {
+      console.log("fetch subjects error", error);
+      return serverErrorResponse(response);
+    }
+  }
+  public async getSubject({ request, response }: HttpContextContract) {
+    const { id } = request.params();
+    try {
+      const subject = await this.subjectsServices.getSubjectService(id);
+      if (!subject) {
+        return badRequestResponse(response, "Subject not found");
+      }
+      return createdResponse<Subject | null>(response, subject);
     } catch (error) {
       console.log("fetch subjects error", error);
       return serverErrorResponse(response);
