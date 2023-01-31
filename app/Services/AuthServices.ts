@@ -1,4 +1,5 @@
 import User from "App/Models/User";
+import { AuthContract } from "@ioc:Adonis/Addons/Auth";
 
 export default class AuthServices {
   constructor() {}
@@ -12,5 +13,17 @@ export default class AuthServices {
     password: string;
   }) {
     return await User.create({ email, name, password });
+  }
+  public async login(
+    { email, password }: { email: string; password: string },
+    auth: AuthContract
+  ) {
+    const token = await auth
+      .use("api")
+      .attempt(email, password, { expiresIn: "7days" });
+
+    const user = await User.query().where("email", email);
+
+    return { ...token.toJSON() };
   }
 }

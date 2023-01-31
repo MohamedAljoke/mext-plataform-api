@@ -23,3 +23,18 @@ export class CreateUserValidator extends BaseValidator {
     ]),
   });
 }
+export class LoginUserValidator extends BaseValidator {
+  constructor(protected ctx: HttpContextContract) {
+    super(ctx);
+  }
+  public schema = schema.create({
+    email: schema.string({ trim: true }, [
+      rules.email(),
+      rules.normalizeEmail({ allLowercase: true, gmailRemoveDots: false }),
+    ]),
+    password: schema.string({ trim: true }, [
+      rules.minLength(8),
+      rules.maxLength(50),
+    ]),
+  });
+}
