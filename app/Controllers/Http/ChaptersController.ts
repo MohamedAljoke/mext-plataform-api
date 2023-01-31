@@ -29,6 +29,19 @@ export default class ChaptersController {
       return serverErrorResponse(response);
     }
   }
+  public async getChapter({ request, response }: HttpContextContract) {
+    const { id } = request.params();
+    try {
+      const chapter = await this.chapterServices.getChapterService(id);
+      if (!chapter) {
+        return badRequestResponse(response, "chapter not found");
+      }
+      return successResponse(response, chapter);
+    } catch (error) {
+      console.log("get chapter error", error);
+      return serverErrorResponse(response);
+    }
+  }
   public async create({ request, response }: HttpContextContract) {
     const { subjectId, chapterName } = await request.validate(ChapterValidator);
     try {

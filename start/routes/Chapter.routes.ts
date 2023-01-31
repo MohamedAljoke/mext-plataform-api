@@ -2,8 +2,8 @@ import Route from "@ioc:Adonis/Core/Route";
 
 export default function chapterRoutes() {
   Route.group(() => {
-    Route.get("/:subjectId", "ChaptersController.fetchChapters");
-    Route.get("/:subjectId/:id", "ChaptersController.getChapter");
+    Route.get("/by-subject/:subjectId", "ChaptersController.fetchChapters");
+    Route.get("/:id", "ChaptersController.getChapter");
   })
     .prefix("/chapters")
     .middleware(["auth"]);
