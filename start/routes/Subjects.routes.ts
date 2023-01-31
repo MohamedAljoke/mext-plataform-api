@@ -4,7 +4,9 @@ export default function subjectRoutes() {
   Route.group(() => {
     Route.get("/", "SubjectsController.fetchSubjects");
     Route.get("/:id", "SubjectsController.getSubject");
-  }).prefix("/subjects");
+  })
+    .prefix("/subjects")
+    .middleware(["auth"]);
 
   Route.group(() => {
     Route.post("/", "SubjectsController.create");
