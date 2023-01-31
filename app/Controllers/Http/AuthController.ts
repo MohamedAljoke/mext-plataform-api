@@ -53,7 +53,7 @@ export default class AuthController {
       );
       return successResponse<TokenResponseType>(response, token);
     } catch (e) {
-      console.error(e.code);
+      console.error(e);
       if (e.code.includes("E_INVALID_AUTH")) {
         response.unauthorized({ error: "Email e/ou senha inválidos." });
       } else {

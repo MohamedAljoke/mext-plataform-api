@@ -1,5 +1,6 @@
 import User from "App/Models/User";
 import { AuthContract } from "@ioc:Adonis/Addons/Auth";
+import { userSerializer } from "App/Serializer/UserSerializer";
 
 export default class AuthServices {
   constructor() {}
@@ -21,9 +22,8 @@ export default class AuthServices {
     const token = await auth
       .use("api")
       .attempt(email, password, { expiresIn: "7days" });
-
-    const user = await User.query().where("email", email);
-
-    return { ...token.toJSON() };
+    const user = await User.query().where({ email });
+    const serializedUser = user[0].serialize(userSerializer);
+    return { ...token.toJSON(), ...serializedUser };
   }
 }
