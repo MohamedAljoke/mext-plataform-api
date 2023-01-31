@@ -1,4 +1,5 @@
 import Chapter from "App/Models/Chapter";
+import { chapterSerializer } from "App/Serializer/ChapterSerializer";
 
 export default class ChapterServices {
   constructor() {}
@@ -21,7 +22,8 @@ export default class ChapterServices {
   }) {
     const chapter = await Chapter.findOrFail(id);
     const updatedChapter = await chapter.merge({ ...{ chapterName } }).save();
-    return updatedChapter;
+    const serialized = updatedChapter.serialize(chapterSerializer);
+    return serialized;
   }
   public async createChapterService({
     subjectId,
