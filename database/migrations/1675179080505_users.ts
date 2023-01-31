@@ -14,6 +14,7 @@ export default class extends BaseSchema {
         .inTable("roles")
         .defaultTo(Roles.USER);
       table.string("email", 255).notNullable().unique();
+      table.string("name", 255).notNullable();
       table.string("password", 180).notNullable();
       table.string("remember_me_token").nullable();
 

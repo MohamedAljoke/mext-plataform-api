@@ -7,6 +7,8 @@ import {
   createdResponse,
   serverErrorResponse,
   badRequestResponse,
+  successResponse,
+  updatedResponse,
 } from "App/utils/http-response";
 
 //so that we can inject the service in the class
@@ -16,7 +18,7 @@ export default class SubjectsController {
   public async fetchSubjects({ response }: HttpContextContract) {
     try {
       const subjects = await this.subjectsServices.fetchSubjectsService();
-      return createdResponse<Subject[]>(response, subjects);
+      return successResponse<Subject[]>(response, subjects);
     } catch (error) {
       console.log("fetch subjects error", error);
       return serverErrorResponse(response);
@@ -29,7 +31,7 @@ export default class SubjectsController {
       if (!subject) {
         return badRequestResponse(response, "Subject not found");
       }
-      return createdResponse<Subject | null>(response, subject);
+      return successResponse<Subject | null>(response, subject);
     } catch (error) {
       console.log("get subject error", error);
       return serverErrorResponse(response);
@@ -56,7 +58,7 @@ export default class SubjectsController {
       if (numberOfSubjects[0] === 0) {
         return badRequestResponse(response, "Subject not found");
       }
-      return createdResponse<number>(response, numberOfSubjects[0]);
+      return successResponse<number>(response, numberOfSubjects[0]);
     } catch (error) {
       console.log("delete subject error", error);
       return serverErrorResponse(response);
@@ -71,7 +73,7 @@ export default class SubjectsController {
         subjectName: subjectName,
       });
 
-      return createdResponse<Subject>(response, updatedSubject);
+      return updatedResponse<Subject>(response, updatedSubject);
     } catch (error) {
       console.log("update subject error", error);
       return serverErrorResponse(response);

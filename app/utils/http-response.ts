@@ -7,6 +7,7 @@ export type DefaultMessageType = {
 const httpStatusCode = {
   OK: 200,
   CREATED: 201,
+  UPDATED: 204,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -19,6 +20,9 @@ export const successResponse = <T>(res: ResponseContract, body: T) => {
 
 export const createdResponse = <T>(res: ResponseContract, body: T) => {
   return res.status(httpStatusCode.CREATED).send(body);
+};
+export const updatedResponse = <T>(res: ResponseContract, body: T) => {
+  return res.status(httpStatusCode.UPDATED).send(body);
 };
 
 export const notAllowed = (res: ResponseContract, errorMessage: string) => {

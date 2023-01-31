@@ -20,6 +20,7 @@
 
 import Route from "@ioc:Adonis/Core/Route";
 import subjectRoutes from "./routes/Subjects.routes";
+import authRoutes from "./routes/Auth.routes";
 
 Route.get("/", async () => {
   return { version: "0.1" };
@@ -27,4 +28,5 @@ Route.get("/", async () => {
 
 Route.group(() => {
   subjectRoutes();
+  authRoutes();
 }).prefix("/api/v1");
