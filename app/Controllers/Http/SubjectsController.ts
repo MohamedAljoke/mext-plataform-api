@@ -63,7 +63,6 @@ export default class SubjectsController {
     }
   }
   public async update({ request, response }: HttpContextContract) {
-    console.log("aa");
     const { id } = request.params();
     const { subjectName } = await request.validate(SubjectValidator);
     try {
