@@ -1,11 +1,11 @@
 import Route from "@ioc:Adonis/Core/Route";
 
-export default function authRoutes() {
+export default function subjectRoutes() {
   Route.group(() => {
-    Route.get("/", "SubjectController.fetchSubjects");
-    Route.get("/:id", "SubjectController.getSubject");
-    Route.post("/", "SubjectController.create");
-    Route.patch("/:id", "SubjectController.update");
-    Route.delete("/:id", "SubjectController.delete");
-  }).prefix("/subject");
+    Route.get("/", "SubjectsController.fetchSubjects");
+    Route.get("/:id", "SubjectsController.getSubject");
+    Route.post("/", "SubjectsController.create");
+    Route.patch("/:id", "SubjectsController.update");
+    Route.delete("/:id", "SubjectsController.delete");
+  }).prefix("/subjects");
 }
