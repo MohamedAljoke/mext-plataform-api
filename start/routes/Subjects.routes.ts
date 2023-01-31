@@ -5,7 +5,7 @@ export default function subjectRoutes() {
     Route.get("/", "SubjectsController.fetchSubjects");
     Route.get("/:id", "SubjectsController.getSubject");
     Route.post("/", "SubjectsController.create");
-    Route.patch("/:id", "SubjectsController.update");
+    Route.put("/:id", "SubjectsController.update");
     Route.delete("/:id", "SubjectsController.delete");
   }).prefix("/subjects");
 }

@@ -31,7 +31,7 @@ export default class SubjectsController {
       }
       return createdResponse<Subject | null>(response, subject);
     } catch (error) {
-      console.log("fetch subjects error", error);
+      console.log("get subject error", error);
       return serverErrorResponse(response);
     }
   }
@@ -44,6 +44,37 @@ export default class SubjectsController {
       return createdResponse<Subject>(response, subject);
     } catch (error) {
       console.log("create subject error", error);
+      return serverErrorResponse(response);
+    }
+  }
+  public async delete({ request, response }: HttpContextContract) {
+    const { id } = request.params();
+    try {
+      const numberOfSubjects = await this.subjectsServices.deleteSubjectService(
+        id
+      );
+      if (numberOfSubjects[0] === 0) {
+        return badRequestResponse(response, "Subject not found");
+      }
+      return createdResponse<number>(response, numberOfSubjects[0]);
+    } catch (error) {
+      console.log("delete subject error", error);
+      return serverErrorResponse(response);
+    }
+  }
+  public async update({ request, response }: HttpContextContract) {
+    console.log("aa");
+    const { id } = request.params();
+    const { subjectName } = await request.validate(SubjectValidator);
+    try {
+      const updatedSubject = await this.subjectsServices.updateSubjectService({
+        id,
+        subjectName: subjectName,
+      });
+
+      return createdResponse<Subject>(response, updatedSubject);
+    } catch (error) {
+      console.log("update subject error", error);
       return serverErrorResponse(response);
     }
   }
