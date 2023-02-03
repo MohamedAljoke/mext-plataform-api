@@ -18,12 +18,6 @@ export default class extends BaseSchema {
         .references("id")
         .inTable("videos")
         .onDelete("CASCADE");
-      table
-        .integer("pdf_id")
-        .unsigned()
-        .references("id")
-        .inTable("pdfs")
-        .onDelete("CASCADE");
 
       table.string("lecture_name");
       table.dateTime("created_at", { useTz: true });

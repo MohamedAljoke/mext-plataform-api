@@ -1,6 +1,14 @@
 import { DateTime } from "luxon";
-import { BaseModel, BelongsTo, belongsTo, column } from "@ioc:Adonis/Lucid/Orm";
+import {
+  BaseModel,
+  BelongsTo,
+  HasMany,
+  belongsTo,
+  column,
+  hasMany,
+} from "@ioc:Adonis/Lucid/Orm";
 import Subject from "./Subject";
+import Lecture from "./Lecture";
 
 export default class Chapter extends BaseModel {
   @column({ isPrimary: true })
@@ -11,6 +19,11 @@ export default class Chapter extends BaseModel {
 
   @column()
   public subjectId: number;
+
+  @hasMany(() => Lecture, {
+    foreignKey: "chapter_id",
+  })
+  public lectuers: HasMany<typeof Lecture>;
 
   @belongsTo(() => Subject, { foreignKey: "subjectId" })
   public role: BelongsTo<typeof Subject>;
