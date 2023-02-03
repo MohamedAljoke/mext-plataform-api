@@ -6,6 +6,7 @@ import {
   manyToMany,
 } from "@ioc:Adonis/Lucid/Orm";
 import Video from "./Video";
+import Pdf from "./Pdf";
 
 export default class Type extends BaseModel {
   @column({ isPrimary: true })
@@ -22,6 +23,15 @@ export default class Type extends BaseModel {
     pivotTable: "video_types",
   })
   public videos: ManyToMany<typeof Video>;
+
+  @manyToMany(() => Pdf, {
+    localKey: "id",
+    pivotForeignKey: "type_id",
+    relatedKey: "id",
+    pivotRelatedForeignKey: "pdf_id",
+    pivotTable: "pdf_types",
+  })
+  public pdfs: ManyToMany<typeof Pdf>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

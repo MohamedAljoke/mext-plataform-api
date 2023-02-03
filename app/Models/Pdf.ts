@@ -5,6 +5,8 @@ import {
   column,
   manyToMany,
 } from "@ioc:Adonis/Lucid/Orm";
+import Lecture from "./Lecture";
+import Type from "./Type";
 
 export default class Pdf extends BaseModel {
   @column({ isPrimary: true })
@@ -16,14 +18,23 @@ export default class Pdf extends BaseModel {
   @column()
   public pdfUrl: string;
 
-  @manyToMany(() => Pdf, {
+  @manyToMany(() => Lecture, {
     localKey: "id",
     pivotForeignKey: "pdf_id",
     relatedKey: "id",
     pivotRelatedForeignKey: "lecture_id",
     pivotTable: "lecture_pdfs",
   })
-  public lectuers: ManyToMany<typeof Pdf>;
+  public lectuers: ManyToMany<typeof Lecture>;
+
+  @manyToMany(() => Type, {
+    localKey: "id",
+    pivotForeignKey: "pdf_id",
+    relatedKey: "id",
+    pivotRelatedForeignKey: "type_id",
+    pivotTable: "pdf_types",
+  })
+  public types: ManyToMany<typeof Type>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
