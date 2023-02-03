@@ -17,11 +17,13 @@ export default class VideosController {
   constructor(private videsServices: VidesServices) {}
 
   public async registerVideo({ response, request }: HttpContextContract) {
-    const { videoName, videoUrl } = await request.validate(VideoValidator);
+    const { videoName, videoUrl, typesId } = await request.validate(
+      VideoValidator
+    );
     try {
       const createdSubject = await this.videsServices.saveVideoService({
-        videoName,
-        videoUrl,
+        video: { videoName, videoUrl },
+        typesId,
       });
       return createdResponse(response, createdSubject);
     } catch (error) {

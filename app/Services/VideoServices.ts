@@ -1,10 +1,21 @@
+import Type from "App/Models/Type";
 import Video from "App/Models/Video";
 
 export default class VidesServices {
   constructor() {}
-  public async saveVideoService(video: Partial<Video>) {
+  public async saveVideoService({
+    video,
+    typesId,
+  }: {
+    video: Partial<Video>;
+    typesId: number[] | undefined;
+  }) {
     const addedVideo = await Video.create(video);
-
+    if (typesId !== undefined) {
+      const type = await Type.query().whereIn("id", typesId);
+      await addedVideo.related("types").attach(type.map((role) => role.id));
+      await addedVideo.load("types");
+    }
     return addedVideo;
   }
   public async deleteVideoService(id: number) {

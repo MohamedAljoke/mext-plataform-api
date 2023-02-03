@@ -1,10 +1,21 @@
 import Pdf from "App/Models/Pdf";
+import Type from "App/Models/Type";
 
 export default class PdfsServices {
   constructor() {}
-  public async savePdfService(pdf: Partial<Pdf>) {
+  public async savePdfService({
+    pdf,
+    typesId,
+  }: {
+    pdf: Partial<Pdf>;
+    typesId: number[] | undefined;
+  }) {
     const addedPdf = await Pdf.create(pdf);
-
+    if (typesId !== undefined) {
+      const type = await Type.query().whereIn("id", typesId);
+      await addedPdf.related("types").attach(type.map((role) => role.id));
+      await addedPdf.load("types");
+    }
     return addedPdf;
   }
   public async deletePdfService(id: number) {
