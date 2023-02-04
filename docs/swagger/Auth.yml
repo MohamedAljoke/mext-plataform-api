@@ -45,6 +45,7 @@
 
 /api/v1/auth/logout:
   get: 
+    summary: 'Logout'
     tags:
       - Auth
     description: Route to destroy token and logout

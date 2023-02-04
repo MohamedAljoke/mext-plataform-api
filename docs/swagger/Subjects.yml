@@ -1,0 +1,45 @@
+/api/v1/subjects:
+  post:
+   summary: 'Add new Subject'
+   tags:
+    - Subject
+   description: 'Route to add a subject'
+   security:
+   - bearerAuth: []
+   requestBody:
+    required: true
+    content:
+     application/json:
+      schema:
+       $ref: '#/definitions/CreateSubjectBody'
+   responses:
+     201:
+       description: Created
+       content:
+         application/json:
+           schema:
+             $ref: '#/definitions/CreateSubjectResponse'
+     400:
+       description: Error
+
+definitions:
+  CreateSubjectBody:
+   type: object
+   properties:
+     subjectName:
+       type: string
+       example: 'example_subject_name'
+
+  CreateSubjectResponse:
+    type: object
+    properties:
+      subject_name:
+        type: string
+        example: 'example_subject_name' 
+      created_at:
+      updated_at:
+       type: string
+       example: '2023-02-04T14:43:19.187-03:00'
+      id:
+       type: number
+       example: 5
