@@ -539,7 +539,7 @@
           "description": "Drop all custom types (Postgres only)"
         }
       ]
-    },    
+    },
     "swagger:generate": {
       "settings": {
         "loadApp": true

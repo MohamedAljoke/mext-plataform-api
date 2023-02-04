@@ -7,8 +7,12 @@ import pdfsRoutes from "./routes/Pdf.routes";
 import videosRoutes from "./routes/Video.routes";
 import typesRoutes from "./routes/Types.routes";
 
-Route.get("/", async () => {
+Route.get("/version", async () => {
   return { version: "0.1" };
+});
+
+Route.get("/", async ({ response }) => {
+  return response.redirect("/docs");
 });
 
 Route.group(() => {
