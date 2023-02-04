@@ -1,9 +1,9 @@
 /api/v1/auth/login:
   post:
-   summary: Sign in
+   summary: Login in
    tags:
     - Auth
-   description: Route to sign in it gives a token back
+   description: Route to Login it gives a token back
    requestBody:
     required: true
     content: 
@@ -21,9 +21,46 @@
       description: Error
 
 
+/api/v1/auth/register:
+  post:
+    summary: Register an account
+    tags:
+      - Auth
+    description: Route to register an account
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/definitions/RegisterBody'
+    responses:
+      201:
+        description: Created
+        content:
+          application/json: 
+            schema:
+              $ref: '#/definitions/RegisterResponse'
+      400:
+        description: Error
+
+/api/v1/auth/logout:
+  get: 
+    tags:
+      - Auth
+    description: Route to destroy token and logout
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/LogoutResponse'
+
 definitions:
   LoginBody:
-   tyope: object
+   type: object
    properties:
     email:
      type: string
@@ -53,3 +90,45 @@ definitions:
     name:
      type: string
      example: 'example name'
+  
+  RegisterBody: 
+   type: object
+   properties:
+     email: 
+      type: string
+      example: 'email@example.com'
+     name: 
+       type: string
+       example: "example name"
+     password:
+       type: string
+       example: '1234'
+     password_confirmation:
+      type: string
+      example: '1234'
+
+  RegisterResponse:
+   type: object
+   properties:
+    email:
+     type: string
+     example: 'example@email.com'
+    name:
+     type: string
+     example: 'example name'
+    created_at:
+     type: string
+     example: "2023-02-04T14:06:57.085-03:00"
+    updated_at:
+     type: string
+     example: "2023-02-04T14:06:57.085-03:00"
+    id:
+     type: number
+     example: 1
+  
+  LogoutResponse:
+    type: object
+    properties:
+      revoked:
+        type: boolean
+        example: true
