@@ -7,6 +7,7 @@ on:
 env:
   MYSQL_USER: myuser
   MYSQL_PASSWORD: mypassword
+  MYSQL_DB_NAME: mext
 
 jobs:
   build:
@@ -21,6 +22,10 @@ jobs:
        run: |
         sudo apt-get install mysql-server
         sudo service mysql start
+        mysql -u root -e "CREATE USER '${{ env.MYSQL_USERNAME }}'@'localhost' IDENTIFIED BY '${{ env.MYSQL_PASSWORD }}';"
+        mysql -u root -e "CREATE DATABASE mext;"
+        mysql -u root -e "GRANT ALL PRIVILEGES ON mydb.* TO '${{ env.MYSQL_USERNAME }}'@'localhost';"
+
      - name: Migrate db tables
        run: node ace migration:run     
      - run: npm install
