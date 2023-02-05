@@ -20,11 +20,11 @@ jobs:
          node-version: '16'
      - name: Set up MySQL
        run: |
-        sudo apt-get install mysql-server
-        sudo service mysql start
-        mysql -h localhost -P 3306 -u root -e "CREATE USER '${{ env.MYSQL_USER }}'@'localhost' IDENTIFIED BY '${{ env.MYSQL_PASSWORD }}';"
-        mysql -h localhost -P 3306 -u root -e "CREATE DATABASE ${{MYSQL_DB_NAME}};"
-        mysql -h localhost -P 3306 -u root -e "GRANT ALL PRIVILEGES ON mydb.* TO '${{ env.MYSQL_USER }}'@'localhost';"
+          sudo apt-get install mysql-server
+          sudo service mysql start
+          mysql -h localhost -P 3306 -u root -e "CREATE USER '${{ env.MYSQL_USER }}'@'localhost' IDENTIFIED BY '${{ env.MYSQL_PASSWORD }}';"
+          mysql -h localhost -P 3306 -u root -e "CREATE DATABASE ${{MYSQL_DB_NAME}};"
+          mysql -h localhost -P 3306 -u root -e "GRANT ALL PRIVILEGES ON mydb.* TO '${{ env.MYSQL_USER }}'@'localhost';"
 
      - name: Migrate db tables
        run: node ace migration:run     
