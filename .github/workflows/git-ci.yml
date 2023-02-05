@@ -8,6 +8,9 @@ env:
   MYSQL_USER: myuser
   MYSQL_PASSWORD: mypassword
   MYSQL_DB_NAME: mext
+  MYSQL_HOST: localhost
+  MYSQL_PORT: 3306
+  DB_CONNECTION: mysql
 
 jobs:
   build:
