@@ -16,7 +16,7 @@ jobs:
   build:
    runs-on: ubuntu-latest
    steps:
-     - uses: actions/checkout@v2
+     - uses: actions/checkout@v3
      - name: Use Node.js version 16
        uses: actions/setup-node@v2
        with:
@@ -35,3 +35,5 @@ jobs:
        run: npm install
      - name: Run tests
        run: npm run test
+     - name: build project
+       run: npm run build
