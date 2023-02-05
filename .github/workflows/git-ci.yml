@@ -25,6 +25,10 @@ jobs:
        run: |
         sudo apt-get install mysql-server
         sudo service mysql start
+        mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'abc';"
+        mysql -h ${{ env.MYSQL_HOST }} -P ${{ env.MYSQL_PORT }} -u root -pabc -e "CREATE USER '${{ env.MYSQL_USER }}'@'localhost' IDENTIFIED BY '${{ env.MYSQL_PASSWORD }}';"
+        mysql -h ${{ env.MYSQL_HOST }} -P ${{ env.MYSQL_PORT }} -u root -pabc -e "CREATE DATABASE ${{ env.MYSQL_DB_NAME }};"
+        mysql -h ${{ env.MYSQL_HOST }} -P ${{ env.MYSQL_PORT }} -u root -pabc -e "GRANT ALL PRIVILEGES ON mydb.* TO '${{ env.MYSQL_USER }}'@'localhost';"
 
      - name: Migrate db tables
        run: node ace migration:run     
