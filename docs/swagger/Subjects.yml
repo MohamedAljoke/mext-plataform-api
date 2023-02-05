@@ -21,7 +21,44 @@
              $ref: '#/definitions/CreateSubjectResponse'
      400:
        description: Error
+  get:
+    summary: 'Fetch list of subjects with chapters'
+    tags:
+      - Subject
+    description: 'Route to fetch subjects'
+    security:
+    - bearerAuth: []
+    responses:
+      200:
+        description: Success
+        content: 
+          application/json:
+            schema:
+              $ref: '#/definitions/FetchSubjectsResponse'
+      400:
+        description: Error
 
+/api/v1/subjects/{id}:
+  get:
+    summary: Get subject by id
+    tags:
+      - Subject  
+    description: Route to get a subject by its id
+    security:
+    - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/GetSubjectByIdResponse'
+      400:
+        description: Error
 definitions:
   CreateSubjectBody:
    type: object
@@ -29,6 +66,61 @@ definitions:
      subjectName:
        type: string
        example: 'example_subject_name'
+
+  FetchSubjectsResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        subject_name:
+          type: string
+          example: 'example_subject'
+        created_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        updated_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        chapters:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              subject_id:
+                type: number
+                example: 1
+              chapter_name:
+                type: string
+                example: 'example_chapter'
+              created_at:
+                type: string
+                example: "2023-01-31T20:37:48.000-03:00"
+              updated_at:
+                type: string
+                example: "2023-01-31T20:37:48.000-03:00"
+
+  GetSubjectByIdResponse:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 1
+      subject_name:
+        type: string
+        example: 'example_subject'
+      created_at:
+        type: string
+        example: "2023-01-31T20:37:48.000-03:00"
+      updated_at:
+        type: string
+        example: "2023-01-31T20:37:48.000-03:00"
+        
 
   CreateSubjectResponse:
     type: object
