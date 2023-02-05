@@ -25,7 +25,8 @@ jobs:
        run: |
         sudo apt-get install mysql-server
         sudo service mysql start
-        mysql -u root -p -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'abc';"
+        mysql -u root -p -h localhost
+
 
      - name: Migrate db tables
        run: node ace migration:run     
