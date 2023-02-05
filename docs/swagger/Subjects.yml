@@ -59,6 +59,7 @@
               $ref: '#/definitions/GetSubjectByIdResponse'
       400:
         description: Error
+
 definitions:
   CreateSubjectBody:
    type: object
