@@ -23,7 +23,7 @@ jobs:
          node-version: '16'
      - name: Set up MySQL
        run: |
-        sudo apt-get install mysql-server=5.7.*
+        sudo apt-get install mysql-server
         sudo service mysql start
         mysql -h ${{ env.MYSQL_HOST }} -P ${{ env.MYSQL_PORT }} -u root -p -e "CREATE USER '${{ env.MYSQL_USER }}'@'localhost' IDENTIFIED BY '${{ env.MYSQL_PASSWORD }}';"
         mysql -h ${{ env.MYSQL_HOST }} -P ${{ env.MYSQL_PORT }} -u root -p -e "CREATE DATABASE ${{ env.MYSQL_DB_NAME }};"
