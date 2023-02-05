@@ -33,5 +33,7 @@ jobs:
        run: node ace migration:run     
      - name: Install node_modules
        run: npm install
+     - name: Run tests
+       run: npm run test
      - name: build project
        run: npm run build
