@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   database-mext-mysql:
+    container_name: db-container
     image: mysql:8.0
     restart: always
     environment:
@@ -18,9 +19,32 @@ services:
     expose:
       # Opens port 3306 on the container
       - '3306'
-      # Where our data will be persisted
     volumes:
       - my-db:/var/lib/mysql
+  adonis-app:
+    container_name: adonis-container
+    image: node:16
+    
+    working_dir: /app
+    volumes:
+      - ../:/app
+    command: sh -c "npm install && npm run build && npm run dev"
+    environment:
+      NODE_ENV: development
+      DB_CONNECTION: mysql
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: mext
+      MYSQL_USER: mext
+      MYSQL_ROOT_PASSWORD: mextmysql
+    ports:
+      - "3333:3333"
+    expose:
+      # Opens port 3333 on the container
+      - '3333'
+    depends_on:
+      - database-mext-mysql
+
 volumes:
   my-db:
     driver: local
