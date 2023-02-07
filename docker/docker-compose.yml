@@ -36,6 +36,7 @@ services:
       DRIVE_DISK: local
       DB_CONNECTION: mysql
       MYSQL_HOST: database-mext-mysql
+      APP_KEY: 7-Q0CwsMQqtL8LseO9n1fr5tan9QJz8_
       MYSQL_PORT: 3306
       MYSQL_USER: mext
       MYSQL_PASSWORD: mextmysql
@@ -43,7 +44,6 @@ services:
     ports:
       - "3333:3333"
     expose:
-      # Opens port 3333 on the container
       - '3333'
     depends_on:
       - database-mext-mysql
