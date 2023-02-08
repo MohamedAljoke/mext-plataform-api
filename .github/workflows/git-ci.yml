@@ -13,20 +13,28 @@ env:
   DB_CONNECTION: mysql
 
 jobs:
-  build:
-   runs-on: ubuntu-latest
-   steps:
+  ci:
+    runs-on: ubuntu-latest
+    container:
+      image: node:14.5.0-alpine
+    services:
+      mysql-master:
+        image: mysql:5.7
+        ports:
+          - 3306/tcp
+        env:
+          MYSQL_DATABASE: ${{ env.MYSQL_DB_NAME }}
+          MYSQL_USER: ${{ env.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+        options: >-
+          --name=mysql-master
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+    steps:
      - uses: actions/checkout@v2
-     - name: Use Node.js version 16
-       uses: actions/setup-node@v2
-       with:
-         node-version: '16'
-     - name: Set up MySQL
-       run: |
-        sudo apt-get install mysql-server
-        sudo service mysql start
-        mysql -u root;
-
      - name: Migrate db tables
        run: node ace migration:run     
      - name: Install node_modules
