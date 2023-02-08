@@ -35,10 +35,10 @@ jobs:
           --health-retries=3
     steps:
      - uses: actions/checkout@v2
-     - name: Migrate db tables
-       run: node ace migration:run     
      - name: Install node_modules
        run: npm install
+     - name: Migrate db tables
+       run: node ace migration:run     
      - name: Run tests
        run: npm run test
      - name: build project
