@@ -5,6 +5,6 @@ export default function lectureRoutes() {
     Route.post("/", "LecturesController.createLecture");
     Route.get("/", "LecturesController.fetchLectuers");
   })
-    .prefix("/lectures")
+    .prefix("/lectuers")
     .middleware(["auth", "role:admin"]);
 }
