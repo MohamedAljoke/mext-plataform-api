@@ -1,0 +1,137 @@
+/api/v1/videos:
+  post:
+    summary: Create a new video with types
+    tags:
+      - Video
+    description: Route to create video and register its types
+    security:
+    - bearerAuth: []
+    requestBody:
+     required: true
+     content: 
+      application/json:
+       schema:
+        $ref: '#/definitions/CreateVideoBody'
+    responses:
+     201: 
+      description: Created
+      content:
+       application/json:
+        schema:
+         $ref: '#/definitions/CreateVideoResponse'
+     400:
+      description: Error
+
+/api/v1/videos/{id}:
+  put:
+    summary: Update video by its id
+    tags:
+      - Video
+    description: Route to update video by its id
+    security:
+    - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/definitions/UpdateVideoBody'
+    parameters:
+      - name: id
+        in: path
+        required: true
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/UpdateVideoByIdResponse'
+      400:
+        description: 'Error'
+  delete:
+    summary: Get Video by id
+    tags:
+      - Video  
+    description: Route to get a Video by its id
+    security:
+    - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+
+definitions:
+  CreateVideoBody:
+    type: object
+    properties:
+      videoName:
+        type: string
+        example: example_video_name 
+      videoUrl:
+        type: string
+        example: example_video_url
+      typesId:
+        type: array
+        items: 
+          type: number
+          example: 1            
+  UpdateVideoBody:
+    type: object
+    properties:
+      videoName:
+        type: string
+        example: example_video_name
+  UpdateVideoByIdResponse:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 1
+      video_name:
+        type: string
+        example: video 3
+      video_url:
+        type: string
+        example: pdf2 url
+      created_at:
+        type: string
+        example: "2023-01-31T20:37:48.000-03:00"
+      updated_at:
+        type: string
+        example: "2023-01-31T20:37:48.000-03:00"  
+  CreateVideoResponse:
+   type: object
+   properties:
+    id:
+     type: number
+     example: 1
+    video_name:
+      type: string
+      example: example_video_name
+    video_url:
+      type: string
+      example: example_video_url
+    created_at:
+      type: string
+      example: "2023-01-31T20:37:48.000-03:00"
+    updated_at:
+      type: string
+      example: "2023-01-31T20:37:48.000-03:00"
+    types:
+      type: array
+      items: 
+       type: object
+       properties:
+        id:
+         type: number
+         example: 2
+        type_name:
+         type: string
+         example: example_type_name
+        created_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        updated_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"

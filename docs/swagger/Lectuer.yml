@@ -37,6 +37,7 @@
               $ref: '#/definitions/FetchLectuersResponse'
       400:
         description: Error
+
 definitions:
   FetchLectuersResponse:
     type: array

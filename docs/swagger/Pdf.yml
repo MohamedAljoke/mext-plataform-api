@@ -1,0 +1,137 @@
+/api/v1/pdfs:
+  post:
+    summary: Create a new pdf with types
+    tags:
+      - Pdf
+    description: Route to create Pdf and register its types
+    security:
+    - bearerAuth: []
+    requestBody:
+     required: true
+     content: 
+      application/json:
+       schema:
+        $ref: '#/definitions/CreatePdfBody'
+    responses:
+     201: 
+      description: Created
+      content:
+       application/json:
+        schema:
+         $ref: '#/definitions/CreatePdfResponse'
+     400:
+      description: Error
+
+/api/v1/pdfs/{id}:
+  put:
+    summary: Update Pdf by its id
+    tags:
+      - Pdf
+    description: Route to update Pdf by its id
+    security:
+    - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/definitions/UpdatePdfBody'
+    parameters:
+      - name: id
+        in: path
+        required: true
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/UpdatePdfByIdResponse'
+      400:
+        description: 'Error'
+  delete:
+    summary: Get Pdf by id
+    tags:
+      - Pdf  
+    description: Route to get a Pdf by its id
+    security:
+    - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+
+definitions:
+  CreatePdfBody:
+    type: object
+    properties:
+      pdfName:
+        type: string
+        example: example_pdf_name 
+      pdfUrl:
+        type: string
+        example: example_pdf_url
+      typesId:
+        type: array
+        items: 
+          type: number
+          example: 1            
+  UpdatePdfBody:
+    type: object
+    properties:
+      pdfName:
+        type: string
+        example: example_pdf_name
+  UpdatePdfByIdResponse:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 1
+      pdf_name:
+        type: string
+        example: pdf 3
+      pdf_url:
+        type: string
+        example: pdf2 url
+      created_at:
+        type: string
+        example: "2023-01-31T20:37:48.000-03:00"
+      updated_at:
+        type: string
+        example: "2023-01-31T20:37:48.000-03:00"  
+  CreatePdfResponse:
+   type: object
+   properties:
+    id:
+     type: number
+     example: 1
+    pdf_name:
+      type: string
+      example: example_pdf_name
+    pdf_url:
+      type: string
+      example: example_pdf_url
+    created_at:
+      type: string
+      example: "2023-01-31T20:37:48.000-03:00"
+    updated_at:
+      type: string
+      example: "2023-01-31T20:37:48.000-03:00"
+    types:
+      type: array
+      items: 
+       type: object
+       properties:
+        id:
+         type: number
+         example: 2
+        type_name:
+         type: string
+         example: example_type_name
+        created_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        updated_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
