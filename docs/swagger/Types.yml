@@ -1,0 +1,46 @@
+/api/v1/types:
+  post:
+    summary: Create a new type for pdf and videos
+    tags:
+     - Types
+    description: Route to create types for pdfs and videos
+    security:
+    - bearerAuth: []
+    requestBody:
+     required: true
+     content: 
+      application/json:
+       schema:
+        $ref: '#/definitions/CreateTypeBody'
+    responses:
+     201: 
+      description: Created
+      content:
+       application/json:
+        schema:
+         $ref: '#/definitions/CreateTypeResponse'
+     400:
+      description: Error
+
+definitions:
+  CreateTypeBody:
+    type: object
+    properties:
+      typeName:
+        type: string
+        example: example_type
+  CreateTypeResponse:
+   type: object
+   properties:
+    id:
+     type: number
+     example: 1
+    type_name:
+      type: string
+      example: example_type_name
+    created_at:
+      type: string
+      example: "2023-01-31T20:37:48.000-03:00"
+    updated_at:
+      type: string
+      example: "2023-01-31T20:37:48.000-03:00"
