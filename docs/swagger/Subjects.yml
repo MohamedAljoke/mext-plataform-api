@@ -59,7 +59,47 @@
               $ref: '#/definitions/GetSubjectByIdResponse'
       400:
         description: Error
-
+  delete:
+    summary: Get subject by id
+    tags:
+      - Subject  
+    description: Route to get a subject by its id
+    security:
+    - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              type: string 
+              example: '1'
+      400:
+        description: Error
+  put:
+    summary: Update subject by its id
+    tags:
+      - Subject
+    description: Route to update a subject by its guid
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        responses:
+          200:
+            description: Success
+            content:
+              application/json:
+                schema:
+                  $ref: '#/definitions/UpdateSubjectByIdResponse'
+          400:
+            description: 'Error'
 definitions:
   CreateSubjectBody:
    type: object
@@ -122,6 +162,12 @@ definitions:
         type: string
         example: "2023-01-31T20:37:48.000-03:00"
         
+  UpdateSubjectByIdResponse:
+   type: object
+   properties:
+     subjectName:
+       type: string
+       example: 'example_subject_name'
 
   CreateSubjectResponse:
     type: object
