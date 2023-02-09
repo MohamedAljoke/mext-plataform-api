@@ -4,16 +4,20 @@ import { chapterSerializer } from "App/Serializer/ChapterSerializer";
 export default class ChapterServices {
   constructor() {}
   public async fetchChaptersService(subjectId: number): Promise<Chapter[]> {
-    return await Chapter.query().where({ subjectId });
-  }
-  public async getChapterService(id: number) {
-    const chapters = await Chapter.query().where({ id });
+    const chapters = await Chapter.query().where({ subjectId });
     await Promise.all(
       chapters.map(async (chapter) => {
         await chapter.load("lectuers");
       })
     );
     return chapters;
+  }
+  public async getChapterService(id: number) {
+    const chapters = await Chapter.query().where({ id });
+    const chapter = chapters[0];
+    await chapter.load("lectuers");
+
+    return chapter;
   }
   public async deleteChapterService(id: number) {
     const data = await Chapter.query().where({ id }).delete();

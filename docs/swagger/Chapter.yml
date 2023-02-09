@@ -21,6 +21,8 @@
              $ref: '#/definitions/CreateChapterResponse'
      400:
        description: Error
+  
+/api/v1/chapters/by-subject/{id}:
   get:
     summary: 'Fetch list of chapter for a subject'
     tags:
@@ -28,6 +30,10 @@
     description: 'Route to fetch Chapters by a subject id'
     security:
     - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
     responses:
       200:
         description: Success
@@ -56,7 +62,7 @@
         content:
           application/json:
             schema:
-              $ref: '#/definitions/GetSubjectByIdResponse'
+              $ref: '#/definitions/GetChapterByIdResponse'
       400:
         description: Error
   delete:
@@ -87,27 +93,36 @@
     description: Route to update a Chapter by its guid
     security:
       - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/definitions/UpdateChapterBody'
     parameters:
       - name: id
         in: path
         required: true
-        responses:
-          200:
-            description: Success
-            content:
-              application/json:
-                schema:
-                  $ref: '#/definitions/UpdateSubjectByIdResponse'
-          400:
-            description: 'Error'
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/UpdateChapterByIdResponse'
+      400:
+        description: 'Error'
 
 definitions:
   CreateChapterBody:
    type: object
    properties:
-     subjectName:
+     chapterName:
        type: string
        example: 'example_chapter_name'
+     subjectId:
+       type: number
+       example: 4
 
   FetchChaptersResponse:
     type: array
@@ -129,33 +144,94 @@ definitions:
         updated_at:
           type: string
           example: "2023-01-31T20:37:48.000-03:00"
+        lectuers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              chapter_id:
+                type: number
+                example: 1
+              video_id: 
+                type: number
+                example: 1
+              lecture_name: 
+                type: string
+                example: example_lecture_name
+              created_at:
+                type: string
+                example: "2023-01-31T20:37:48.000-03:00"
+              updated_at:
+                type: string
+                example: "2023-01-31T20:37:48.000-03:00"
 
-  GetSubjectByIdResponse:
-    type: object
-    properties:
-      id:
-        type: number
-        example: 1
-      subject_name:
-        type: string
-        example: 'example_subject'
-      created_at:
-        type: string
-        example: "2023-01-31T20:37:48.000-03:00"
-      updated_at:
-        type: string
-        example: "2023-01-31T20:37:48.000-03:00"
-        
-  UpdateSubjectByIdResponse:
+  GetChapterByIdResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        subject_id:
+          type: number
+          example: 4
+        chapter_name:
+          type: string
+          example: 'example_chapter'
+        created_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        updated_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        lectuers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              chapter_id:
+                type: number
+                example: 1
+              video_id: 
+                type: number
+                example: 1
+              lecture_name: 
+                type: string
+                example: example_lecture_name
+              created_at:
+                type: string
+                example: "2023-01-31T20:37:48.000-03:00"
+              updated_at:
+                type: string
+                example: "2023-01-31T20:37:48.000-03:00"
+
+  UpdateChapterByIdResponse:
    type: object
    properties:
-     chapterName:
-       type: string
-       example: 'example_subject_name'
-     subjectId:
+     id:
        type: number
        example: 1
+     chapter_name:
+       type: string
+       example: 'example_chapter_name'
+     created_at:
+      type: string
+      example: '2023-02-04T14:43:19.187-03:00'
+     updated_at:
+      type: string
+      example: '2023-02-04T14:43:19.187-03:00'
 
+  UpdateChapterBody:
+    type: object
+    properties:
+      chapter_name:
+        type: string
+        example: example_chapter_name
   CreateChapterResponse:
     type: object
     properties:
@@ -166,6 +242,8 @@ definitions:
         type: number
         example: 1 
       created_at:
+       type: string
+       example: '2023-02-04T14:43:19.187-03:00'
       updated_at:
        type: string
        example: '2023-02-04T14:43:19.187-03:00'
