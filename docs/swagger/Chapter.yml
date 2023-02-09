@@ -1,0 +1,190 @@
+/api/v1/chapters:
+  post:
+   summary: 'Add new Chapter'
+   tags:
+    - Chapter
+   description: 'Route to add a chapter'
+   security:
+   - bearerAuth: []
+   requestBody:
+    required: true
+    content:
+     application/json:
+      schema:
+       $ref: '#/definitions/CreateChapterBody'
+   responses:
+     201:
+       description: Created
+       content:
+         application/json:
+           schema:
+             $ref: '#/definitions/CreateChapterResponse'
+     400:
+       description: Error
+  get:
+    summary: 'Fetch list of subjects with chapters'
+    tags:
+      - Subject
+    description: 'Route to fetch subjects'
+    security:
+    - bearerAuth: []
+    responses:
+      200:
+        description: Success
+        content: 
+          application/json:
+            schema:
+              $ref: '#/definitions/FetchSubjectsResponse'
+      400:
+        description: Error
+
+/api/v1/subjects/{id}:
+  get:
+    summary: Get subject by id
+    tags:
+      - Subject  
+    description: Route to get a subject by its id
+    security:
+    - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/GetSubjectByIdResponse'
+      400:
+        description: Error
+  delete:
+    summary: Get subject by id
+    tags:
+      - Subject  
+    description: Route to get a subject by its id
+    security:
+    - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              type: string 
+              example: '1'
+      400:
+        description: Error
+  put:
+    summary: Update subject by its id
+    tags:
+      - Subject
+    description: Route to update a subject by its guid
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        responses:
+          200:
+            description: Success
+            content:
+              application/json:
+                schema:
+                  $ref: '#/definitions/UpdateSubjectByIdResponse'
+          400:
+            description: 'Error'
+definitions:
+  CreateChapterBody:
+   type: object
+   properties:
+     subjectName:
+       type: string
+       example: 'example_chapter_name'
+
+  FetchSubjectsResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        subject_name:
+          type: string
+          example: 'example_subject'
+        created_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        updated_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        chapters:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              subject_id:
+                type: number
+                example: 1
+              chapter_name:
+                type: string
+                example: 'example_chapter'
+              created_at:
+                type: string
+                example: "2023-01-31T20:37:48.000-03:00"
+              updated_at:
+                type: string
+                example: "2023-01-31T20:37:48.000-03:00"
+
+  GetSubjectByIdResponse:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 1
+      subject_name:
+        type: string
+        example: 'example_subject'
+      created_at:
+        type: string
+        example: "2023-01-31T20:37:48.000-03:00"
+      updated_at:
+        type: string
+        example: "2023-01-31T20:37:48.000-03:00"
+        
+  UpdateSubjectByIdResponse:
+   type: object
+   properties:
+     chapterName:
+       type: string
+       example: 'example_subject_name'
+     subjectId:
+       type: number
+       example: 1
+
+  CreateChapterResponse:
+    type: object
+    properties:
+      chapter_name:
+        type: string
+        example: 'example_chapter_name' 
+      subject_id:
+        type: number
+        example: 1 
+      created_at:
+      updated_at:
+       type: string
+       example: '2023-02-04T14:43:19.187-03:00'
+      id:
+       type: number
+       example: 5
