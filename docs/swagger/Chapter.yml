@@ -229,7 +229,7 @@ definitions:
   UpdateChapterBody:
     type: object
     properties:
-      chapter_name:
+      chapterName:
         type: string
         example: example_chapter_name
   CreateChapterResponse:

@@ -97,15 +97,15 @@
       - name: id
         in: path
         required: true
-        responses:
-          200:
-            description: Success
-            content:
-              application/json:
-                schema:
-                  $ref: '#/definitions/UpdateSubjectByIdResponse'
-          400:
-            description: 'Error'
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/UpdateSubjectByIdResponse'
+      400:
+        description: 'Error'
 definitions:
   CreateSubjectBody:
    type: object
@@ -181,6 +181,7 @@ definitions:
       subjectName:
         type: string
         example: example_subject_name
+  
   CreateSubjectResponse:
     type: object
     properties:

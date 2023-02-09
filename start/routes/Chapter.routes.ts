@@ -1,5 +1,4 @@
 import Route from "@ioc:Adonis/Core/Route";
-// MTk.TBsjj5_2LX48eYT0m37QgzxEpeIO8CYa6716iY7O6LlDbI8Kcu18g5PWfy0b;
 export default function chapterRoutes() {
   Route.group(() => {
     Route.get("/by-subject/:subjectId", "ChaptersController.fetchChapters");
