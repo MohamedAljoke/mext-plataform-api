@@ -1,0 +1,88 @@
+/api/v1/lectuers:
+  post:
+   summary: Create new lectuer
+   tags:
+    - lectuer
+   description: Route to create a lectuer for a chapter
+   security:
+   - bearerAuth: []
+   requestBody:
+    required: true
+    content:
+     application/json:
+      schema:
+       $ref: '#/definitions/CreateLectuerBody'
+   responses:
+     201:
+       description: Created
+       content:
+         application/json:
+           schema:
+             $ref: '#/definitions/CreateLectuerResponse'
+     400:
+       description: Error
+  get:
+    summary: fetch all lectuers list
+    tags:
+      - lectuer
+    description: route to fetch all lectuers
+    security:
+    - bearerAuth: []
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/FetchLectuersResponse'
+      400:
+        description: Error
+definitions:
+  FetchLectuersResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        chapter_id:
+          type: number
+          example: 1
+        video_id:
+          type: number
+          example: 1
+        lecture_name:
+          type: string
+          example: example_lecture_name
+        created_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+        updated_at:
+          type: string
+          example: "2023-01-31T20:37:48.000-03:00"
+
+  CreateLectuerBody:
+   type: object
+   properties:
+    lectureName:
+     type: string
+     example: example_lecture_name
+    chapterId:
+     type: number
+     example: 1
+  CreateLectuerResponse:
+   type: object
+   properties:
+    id:
+     type: number
+     example: 1
+    chapter_id:
+     type: number
+     example: 1
+    created_at:
+      type: string
+      example: "2023-01-31T20:37:48.000-03:00"
+    updated_at:
+      type: string
+      example: "2023-01-31T20:37:48.000-03:00"
