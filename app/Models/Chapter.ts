@@ -21,12 +21,12 @@ export default class Chapter extends BaseModel {
   public subjectId: number;
 
   @hasMany(() => Lecture, {
-    foreignKey: "chapter_id",
+    foreignKey: "chapterId",
   })
   public lectuers: HasMany<typeof Lecture>;
 
   @belongsTo(() => Subject, { foreignKey: "subjectId" })
-  public role: BelongsTo<typeof Subject>;
+  public subject: BelongsTo<typeof Subject>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

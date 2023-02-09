@@ -14,12 +14,12 @@ export default class LecturesController {
   constructor(private lecturesServices: LecturesServices) {}
 
   public async createLecture({ response, request }: HttpContextContract) {
-    const { videoId, lectureName, pdfId } = await request.validate(
+    const { videoId, lectureName, pdfId, chapterId } = await request.validate(
       CreateLectureValidator
     );
     try {
       const createdSubject = await this.lecturesServices.createLectureService({
-        lecture: { videoId, lectureName },
+        lecture: { videoId, lectureName, chapterId },
         pdfId,
       });
       return createdResponse(response, createdSubject);

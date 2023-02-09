@@ -7,7 +7,13 @@ export default class ChapterServices {
     return await Chapter.query().where({ subjectId });
   }
   public async getChapterService(id: number) {
-    return await Chapter.find(id);
+    const chapters = await Chapter.query().where({ id });
+    await Promise.all(
+      chapters.map(async (chapter) => {
+        await chapter.load("lectuers");
+      })
+    );
+    return chapters;
   }
   public async deleteChapterService(id: number) {
     const data = await Chapter.query().where({ id }).delete();

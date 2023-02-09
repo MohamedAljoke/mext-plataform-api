@@ -22,10 +22,10 @@
      400:
        description: Error
   get:
-    summary: 'Fetch list of subjects with chapters'
+    summary: 'Fetch list of chapter for a subject'
     tags:
-      - Subject
-    description: 'Route to fetch subjects'
+      - Chapter
+    description: 'Route to fetch Chapters by a subject id'
     security:
     - bearerAuth: []
     responses:
@@ -34,16 +34,16 @@
         content: 
           application/json:
             schema:
-              $ref: '#/definitions/FetchSubjectsResponse'
+              $ref: '#/definitions/FetchChaptersResponse'
       400:
         description: Error
 
-/api/v1/subjects/{id}:
+/api/v1/chapters/{id}:
   get:
-    summary: Get subject by id
+    summary: Get Chapter by id
     tags:
-      - Subject  
-    description: Route to get a subject by its id
+      - Chapter  
+    description: Route to get a Chapter by its id
     security:
     - bearerAuth: []
     parameters:
@@ -60,10 +60,10 @@
       400:
         description: Error
   delete:
-    summary: Get subject by id
+    summary: Get Chapter by id
     tags:
-      - Subject  
-    description: Route to get a subject by its id
+      - Chapter  
+    description: Route to get a Chapter by its id
     security:
     - bearerAuth: []
     parameters:
@@ -81,10 +81,10 @@
       400:
         description: Error
   put:
-    summary: Update subject by its id
+    summary: Update Chapter by its id
     tags:
-      - Subject
-    description: Route to update a subject by its guid
+      - Chapter
+    description: Route to update a Chapter by its guid
     security:
       - bearerAuth: []
     parameters:
@@ -100,6 +100,7 @@
                   $ref: '#/definitions/UpdateSubjectByIdResponse'
           400:
             description: 'Error'
+
 definitions:
   CreateChapterBody:
    type: object
@@ -108,7 +109,7 @@ definitions:
        type: string
        example: 'example_chapter_name'
 
-  FetchSubjectsResponse:
+  FetchChaptersResponse:
     type: array
     items:
       type: object
@@ -116,35 +117,18 @@ definitions:
         id:
           type: number
           example: 1
-        subject_name:
+        subject_id:
+          type: number
+          example: 4
+        chapter_name:
           type: string
-          example: 'example_subject'
+          example: 'example_chapter'
         created_at:
           type: string
           example: "2023-01-31T20:37:48.000-03:00"
         updated_at:
           type: string
           example: "2023-01-31T20:37:48.000-03:00"
-        chapters:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: number
-                example: 1
-              subject_id:
-                type: number
-                example: 1
-              chapter_name:
-                type: string
-                example: 'example_chapter'
-              created_at:
-                type: string
-                example: "2023-01-31T20:37:48.000-03:00"
-              updated_at:
-                type: string
-                example: "2023-01-31T20:37:48.000-03:00"
 
   GetSubjectByIdResponse:
     type: object

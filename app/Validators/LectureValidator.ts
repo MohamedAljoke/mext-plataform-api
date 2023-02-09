@@ -3,6 +3,7 @@ import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { BaseValidator } from "./BaseValidator";
 import Pdf from "App/Models/Pdf";
 import Video from "App/Models/Video";
+import Chapter from "App/Models/Chapter";
 
 export class CreateLectureValidator extends BaseValidator {
   constructor(protected ctx: HttpContextContract) {
@@ -10,7 +11,10 @@ export class CreateLectureValidator extends BaseValidator {
   }
 
   public schema = schema.create({
-    videoId: schema.number([
+    chapterId: schema.number([
+      rules.exists({ table: Chapter.table, column: "id" }),
+    ]),
+    videoId: schema.number.optional([
       rules.exists({ table: Video.table, column: "id" }),
     ]),
     lectureName: schema.string(),

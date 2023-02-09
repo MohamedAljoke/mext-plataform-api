@@ -19,6 +19,9 @@ export default class Lecture extends BaseModel {
   public videoId: number;
 
   @column()
+  public chapterId: number;
+
+  @column()
   public lectureName: string;
 
   @belongsTo(() => Video, { foreignKey: "videoId" })
