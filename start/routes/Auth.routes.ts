@@ -6,4 +6,10 @@ export default function authRoutes() {
     Route.post("/login", "AuthController.login");
     Route.get("/logout", "AuthController.logout");
   }).prefix("/auth");
+
+  Route.group(() => {
+    Route.post("/refresh", "AuthController.loginRefresh");
+  })
+    .prefix("/auth")
+    .middleware("auth");
 }

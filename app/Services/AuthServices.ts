@@ -27,7 +27,7 @@ export default class AuthServices {
     return { ...token.toJSON(), ...serializedUser };
   }
   public async loginRefresh(user: User, auth: AuthContract) {
-    const serializedUser = user[0].serialize(userSerializer);
+    const serializedUser = user.serialize(userSerializer);
     const tokenJSON = (
       await auth.use("api").generate(user, { expiresIn: "7days" })
     ).toJSON();
