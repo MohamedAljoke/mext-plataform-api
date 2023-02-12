@@ -62,6 +62,14 @@ export default class AuthController {
     }
   }
 
+  public async loginRefresh({ response, auth }: HttpContextContract) {
+    try {
+      return this.authService.loginRefresh(auth.user as User, auth);
+    } catch (e) {
+      return serverErrorResponse(response);
+    }
+  }
+
   public async logout({ response, auth }: HttpContextContract) {
     await auth.logout();
     return successResponse(response, { success: true });
