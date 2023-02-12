@@ -55,7 +55,7 @@ export default class AuthController {
     } catch (e) {
       console.error(e);
       if (e.code.includes("E_INVALID_AUTH")) {
-        response.unauthorized({ error: "Email e/ou senha inválidos." });
+        response.unauthorized({ error: "Email or password are incorrect" });
       } else {
         return serverErrorResponse(response);
       }
