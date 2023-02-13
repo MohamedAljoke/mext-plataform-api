@@ -3,6 +3,7 @@ import Pdf from "App/Models/Pdf";
 
 export default class LecturesServices {
   constructor() {}
+
   public async fetchLectuerService() {
     const lectuers = await Lecture.query();
     await Promise.all(
@@ -13,10 +14,13 @@ export default class LecturesServices {
     );
     return lectuers;
   }
+
   public async getLectuerService(id: number) {
     const lectuer = await Lecture.find(id);
+    await Promise.all([lectuer?.load("video"), lectuer?.load("pdfs")]);
     return lectuer;
   }
+
   public async createLectureService({
     lecture,
     pdfId,
