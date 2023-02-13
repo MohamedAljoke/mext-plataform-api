@@ -13,6 +13,10 @@ export default class LecturesServices {
     );
     return lectuers;
   }
+  public async getLectuerService(id: number) {
+    const lectuer = await Lecture.query().where({ id });
+    return lectuer;
+  }
   public async createLectureService({
     lecture,
     pdfId,

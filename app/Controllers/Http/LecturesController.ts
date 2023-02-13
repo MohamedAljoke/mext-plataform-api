@@ -3,6 +3,7 @@ import { inject } from "@adonisjs/fold";
 import { CreateLectureValidator } from "App/Validators/LectureValidator";
 import LecturesServices from "App/Services/LectureService";
 import {
+  badRequestResponse,
   createdResponse,
   serverErrorResponse,
   successResponse,
@@ -34,6 +35,19 @@ export default class LecturesController {
       return successResponse<Lecture[]>(response, lectuers);
     } catch (error) {
       console.log("fetch lectuers error", error);
+      return serverErrorResponse(response);
+    }
+  }
+  public async getLectuer({ request, response }: HttpContextContract) {
+    const { id } = request.params();
+    try {
+      const lectuer = await this.lecturesServices.getLectuerService(id);
+      if (!lectuer) {
+        return badRequestResponse(response, "lectuer not found");
+      }
+      return successResponse(response, lectuer);
+    } catch (error) {
+      console.log("get lectuer error", error);
       return serverErrorResponse(response);
     }
   }
