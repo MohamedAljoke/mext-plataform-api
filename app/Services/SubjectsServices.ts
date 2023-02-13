@@ -9,7 +9,15 @@ export default class SubjectsServices {
     return subjects;
   }
   public async getSubjectService(id: number) {
-    return await Subject.find(id);
+    const subject = await Subject.find(id);
+    await subject?.load("chapters");
+    if (subject?.chapters) {
+      await Promise.all(
+        subject?.chapters.map((chapter) => chapter.load("lectuers"))
+      );
+    }
+
+    return subject;
   }
   public async deleteSubjectService(id: number) {
     const data = await Subject.query().where({ id }).delete();
