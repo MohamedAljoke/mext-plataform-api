@@ -14,7 +14,7 @@ export default class LecturesServices {
     return lectuers;
   }
   public async getLectuerService(id: number) {
-    const lectuer = await Lecture.query().where({ id });
+    const lectuer = await Lecture.find(id);
     return lectuer;
   }
   public async createLectureService({
