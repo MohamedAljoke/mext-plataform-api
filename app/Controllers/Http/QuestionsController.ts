@@ -8,7 +8,7 @@ import { createdResponse, serverErrorResponse } from "App/utils/http-response";
 export default class QuestionsController {
   constructor(private questionServices: QuestionServices) {}
   public async addQuestion({ response, request }: HttpContextContract) {
-    const { lectureId, questionText } = await request.validate(
+    const { lectureId, questionText, alternatives } = await request.validate(
       QuestionValidator
     );
     try {
@@ -16,6 +16,7 @@ export default class QuestionsController {
         {
           question: { questionText },
           lectureId,
+          alternatives,
         }
       );
       return createdResponse(response, createdQuestion);

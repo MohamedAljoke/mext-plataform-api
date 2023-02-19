@@ -7,7 +7,7 @@ export default class Alternative extends BaseModel {
   public id: number;
 
   @column()
-  public questionId: string;
+  public questionId: number;
 
   @column()
   public alternativeText: string;

@@ -15,5 +15,11 @@ export default class QuestionValidator extends BaseValidator {
         schema.number([rules.exists({ table: Lecture.table, column: "id" })])
       ),
     questionText: schema.string(),
+    alternatives: schema.array().members(
+      schema.object().members({
+        alternativeText: schema.string(),
+        isCorrect: schema.boolean(),
+      })
+    ),
   });
 }

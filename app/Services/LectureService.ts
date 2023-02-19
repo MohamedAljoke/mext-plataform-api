@@ -10,6 +10,7 @@ export default class LecturesServices {
       lectuers.map(async (lectuer) => {
         await lectuer.load("pdfs");
         await lectuer.load("video");
+        await lectuer.load("questions");
       })
     );
     return lectuers;

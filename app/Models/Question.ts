@@ -1,11 +1,14 @@
 import { DateTime } from "luxon";
 import {
   BaseModel,
+  HasMany,
   ManyToMany,
   column,
+  hasMany,
   manyToMany,
 } from "@ioc:Adonis/Lucid/Orm";
 import Lecture from "./Lecture";
+import Alternative from "./Alternative";
 
 export default class Question extends BaseModel {
   @column({ isPrimary: true })
@@ -22,6 +25,11 @@ export default class Question extends BaseModel {
     pivotTable: "lecture_questions",
   })
   public lectuers: ManyToMany<typeof Lecture>;
+
+  @hasMany(() => Alternative, {
+    foreignKey: "questionId",
+  })
+  public alternatives: HasMany<typeof Alternative>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
