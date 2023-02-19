@@ -21,7 +21,7 @@ export default class Question extends BaseModel {
     pivotRelatedForeignKey: "lecture_id",
     pivotTable: "lecture_questions",
   })
-  public Lectuers: ManyToMany<typeof Lecture>;
+  public lectuers: ManyToMany<typeof Lecture>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
