@@ -11,6 +11,11 @@ export default class LecturesServices {
         await lectuer.load("pdfs");
         await lectuer.load("video");
         await lectuer.load("questions");
+        if (lectuer?.questions) {
+          await Promise.all(
+            lectuer?.questions.map((question) => question.load("alternatives"))
+          );
+        }
       })
     );
     return lectuers;
