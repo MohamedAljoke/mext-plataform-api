@@ -6,6 +6,7 @@ import lectureRoutes from "./routes/Lecture.routes";
 import pdfsRoutes from "./routes/Pdf.routes";
 import videosRoutes from "./routes/Video.routes";
 import typesRoutes from "./routes/Types.routes";
+import questionRoutes from "./routes/Question.routes";
 
 Route.get("/version", async () => {
   return { version: "0.1" };
@@ -23,4 +24,5 @@ Route.group(() => {
   pdfsRoutes();
   videosRoutes();
   typesRoutes();
+  questionRoutes();
 }).prefix("/api/v1");

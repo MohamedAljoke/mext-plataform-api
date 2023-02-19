@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments("id");
 
       table.integer("lecture_id").unsigned().references("lectures.id");
-      table.integer("question_id").unsigned().references("question.id");
+      table.integer("question_id").unsigned().references("questions.id");
 
       table.dateTime("created_at", { useTz: true });
       table.dateTime("updated_at", { useTz: true });
