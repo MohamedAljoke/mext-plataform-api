@@ -10,6 +10,7 @@ import {
 import Video from "./Video";
 import Pdf from "./Pdf";
 import Chapter from "./Chapter";
+import Question from "./Question";
 
 export default class Lecture extends BaseModel {
   @column({ isPrimary: true })
@@ -35,6 +36,15 @@ export default class Lecture extends BaseModel {
     pivotTable: "lecture_pdfs",
   })
   public pdfs: ManyToMany<typeof Pdf>;
+
+  @manyToMany(() => Question, {
+    localKey: "id",
+    pivotForeignKey: "lecture_id",
+    relatedKey: "id",
+    pivotRelatedForeignKey: "question_id",
+    pivotTable: "lecture_questions",
+  })
+  public questions: ManyToMany<typeof Question>;
 
   @belongsTo(() => Chapter, {
     localKey: "id",
