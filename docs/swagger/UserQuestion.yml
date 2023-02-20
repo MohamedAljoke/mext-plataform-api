@@ -1,0 +1,60 @@
+/api/v1/user-questions:
+  post:
+   summary: answer a question
+   tags:
+    - User Questions
+   description: Route to for the user to answer a question
+   security:
+   - bearerAuth: []
+   requestBody:
+    required: true
+    content: 
+     application/json:
+      schema:
+       $ref: '#/definitions/UserQuestionsBody'
+   responses:
+     201:
+       description: Success
+       content:
+         application/json: 
+           schema:
+             $ref: '#/definitions/UserQuestionsResponse'
+     400:
+      description: Error
+
+
+definitions:
+  UserQuestionsBody:
+   type: object
+   properties:
+     lectureId: 
+      type: number
+      example: 1
+     answerId:
+       type: number
+       example: 1
+
+  UserQuestionsResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        question_id:
+          type: number
+          example: 1
+        alternative_text:
+          type: string
+          example: 'alternative text'
+        is_correct:
+          type: boolean
+          example: 0
+        created_at:
+          type: string
+          example: '2023-02-20T11:00:04.020-03:00'     
+        updated_at:
+          type: string
+          example: '2023-02-20T11:00:04.020-03:00'
+            

@@ -1,9 +1,9 @@
 /api/v1/questions:
   post:
-   summary: Login in
+   summary: Add a question
    tags:
     - Question
-   description: Route to Login it gives a token back
+   description: Route to create a question
    security:
    - bearerAuth: []
    requestBody:
