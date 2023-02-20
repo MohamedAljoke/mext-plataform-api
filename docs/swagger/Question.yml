@@ -32,6 +32,11 @@ definitions:
       items:
         type: number
         example: 1
+     typesId: 
+      type: array
+      items:
+        type: number
+        example: 1
      questionText: 
        type: string
        example: "example_question"
