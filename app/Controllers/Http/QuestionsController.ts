@@ -9,15 +9,15 @@ export default class QuestionsController {
   constructor(private questionServices: QuestionServices) {}
 
   public async addQuestion({ response, request }: HttpContextContract) {
-    const { lectureId, questionText, alternatives } = await request.validate(
-      QuestionValidator
-    );
+    const { lectureId, questionText, alternatives, typesId } =
+      await request.validate(QuestionValidator);
     try {
       const createdQuestion = await this.questionServices.createQuestionService(
         {
           question: { questionText },
           lectureId,
           alternatives,
+          typesId,
         }
       );
       return createdResponse(response, createdQuestion);

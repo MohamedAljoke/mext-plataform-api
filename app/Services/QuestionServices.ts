@@ -3,6 +3,7 @@ import Question from "App/Models/Question";
 import { inject } from "@adonisjs/fold";
 import AlternativasServices from "./AlternativasServices";
 import Alternative from "App/Models/Alternative";
+import Type from "App/Models/Type";
 
 @inject()
 export default class QuestionServices {
@@ -11,9 +12,11 @@ export default class QuestionServices {
     question,
     lectureId,
     alternatives,
+    typesId,
   }: {
     question: Partial<Question>;
     lectureId: number[];
+    typesId?: number[];
     alternatives: Partial<Alternative>[];
   }) {
     const addedQuestion = await Question.create(question);
@@ -31,6 +34,12 @@ export default class QuestionServices {
         });
       })
     );
+    //add types
+    if (typesId !== undefined) {
+      const type = await Type.query().whereIn("id", typesId);
+      await addedQuestion.related("types").attach(type.map((typ) => typ.id));
+      await addedQuestion.load("types");
+    }
     await addedQuestion.load("alternatives");
     return addedQuestion;
   }
