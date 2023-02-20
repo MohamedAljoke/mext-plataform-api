@@ -6,18 +6,7 @@ export default class LecturesServices {
 
   public async fetchLectuerService() {
     const lectuers = await Lecture.query();
-    await Promise.all(
-      lectuers.map(async (lectuer) => {
-        await lectuer.load("pdfs");
-        await lectuer.load("video");
-        await lectuer.load("questions");
-        if (lectuer?.questions) {
-          await Promise.all(
-            lectuer?.questions.map((question) => question.load("alternatives"))
-          );
-        }
-      })
-    );
+
     return lectuers;
   }
 
