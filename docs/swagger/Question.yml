@@ -1,0 +1,109 @@
+/api/v1/questions:
+  post:
+   summary: Login in
+   tags:
+    - Question
+   description: Route to Login it gives a token back
+   requestBody:
+    required: true
+    content: 
+     application/json:
+      schema:
+       $ref: '#/definitions/QuestionsBody'
+   responses:
+     200:
+       description: Success
+       content:
+         application/json: 
+           schema:
+             $ref: '#/definitions/QuestionsResponse'
+     400:
+      description: Error
+
+
+definitions:
+  QuestionsBody:
+   type: object
+   properties:
+     lectureId: 
+      type: array
+      items:
+        type: number
+        example: 1
+     questionText: 
+       type: string
+       example: "example_question"
+     alternatives:
+       type: array
+       items:
+         type: object
+         properties:
+          alternativeText:
+           type: string
+           example: "exemplo alternativa um"
+          isCorrect:
+           type: boolean
+           example: "true"
+  QuestionsResponse:
+    type: object
+    properties:
+      question_text:
+        type: string
+        example: 'question text'    
+      created_at:
+        type: string
+        example: '2023-02-20T11:00:04.020-03:00'     
+      updated_at:
+        type: string
+        example: '2023-02-20T11:00:04.020-03:00'
+      id:
+        type: number
+        example: 1
+      lectuers:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            chapter_id:
+              type: number
+              example: 1
+            video_id:
+              type: number
+              example: 1
+            lecture_name:
+              type: string
+              example: example_lecture_name
+            created_at:
+              type: string
+              example: "2023-01-31T20:37:48.000-03:00"
+            updated_at:
+              type: string
+              example: "2023-01-31T20:37:48.000-03:00"
+      alternatives:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            question_id:
+              type: number
+              example: 2
+            alternative_text:
+              type: string
+              example: 'resposta um'
+            is_correct: 
+              type: boolean
+              example: 0
+            created_at:
+              type: string
+              example: '2023-02-20T11:00:04.020-03:00'     
+            updated_at:
+              type: string
+              example: '2023-02-20T11:00:04.020-03:00'
+          
+      

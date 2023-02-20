@@ -7,6 +7,7 @@ import { createdResponse, serverErrorResponse } from "App/utils/http-response";
 @inject()
 export default class QuestionsController {
   constructor(private questionServices: QuestionServices) {}
+
   public async addQuestion({ response, request }: HttpContextContract) {
     const { lectureId, questionText, alternatives } = await request.validate(
       QuestionValidator
