@@ -23,7 +23,11 @@ export default class LecturesServices {
 
   public async getLectuerService(id: number) {
     const lectuer = await Lecture.find(id);
-    await Promise.all([lectuer?.load("video"), lectuer?.load("pdfs")]);
+    await Promise.all([
+      lectuer?.load("video"),
+      lectuer?.load("pdfs"),
+      lectuer?.load("questions"),
+    ]);
     return lectuer;
   }
 
