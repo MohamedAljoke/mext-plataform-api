@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments("id");
       table.integer("user_id").unsigned().references("users.id");
-      table.integer("question_id").unsigned().references("lectures.id");
+      table.integer("question_id").unsigned().references("questions.id");
       table.integer("alternative_id").unsigned().references("alternatives.id");
 
       table.dateTime("created_at", { useTz: true });
