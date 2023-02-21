@@ -39,6 +39,13 @@ export default class UserQuestionServices {
   }) {
     const lecture = await Lecture.find(lectureId);
     await lecture?.load("questions");
+    if (lecture?.questions) {
+      await Promise.all(
+        lecture.questions.map(async (question) => {
+          await question.load("alternatives");
+        })
+      );
+    }
     const userAnsweredQuestionsWithBuffer = await Database.rawQuery(
       `
       SELECT ur.*
