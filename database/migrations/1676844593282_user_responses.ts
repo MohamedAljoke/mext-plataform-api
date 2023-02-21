@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.integer("user_id").unsigned().references("users.id");
       table.integer("question_id").unsigned().references("questions.id");
       table.integer("alternative_id").unsigned().references("alternatives.id");
+      table.boolean("is_correct");
 
       table.dateTime("created_at", { useTz: true });
       table.dateTime("updated_at", { useTz: true });

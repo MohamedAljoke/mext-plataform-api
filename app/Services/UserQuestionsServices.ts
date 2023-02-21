@@ -14,13 +14,18 @@ export default class UserQuestionServices {
     answerId: number;
     studentId?: number;
   }) {
-    const choosenAlternative = await Alternative.query()
+    const choosenAlternatives = await Alternative.query()
       .where({ id: answerId })
       .andWhere({ questionId: questionId });
+    if (choosenAlternatives.length === 0) {
+      throw Error("alternative not found");
+    }
+    const choosenAlternative = choosenAlternatives[0];
     await UserResponse.create({
       questionId: questionId,
       alternativeId: answerId,
       userId: studentId,
+      isCorrect: choosenAlternative.isCorrect,
     });
     return choosenAlternative;
   }

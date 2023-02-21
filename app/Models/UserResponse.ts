@@ -15,6 +15,9 @@ export default class UserResponse extends BaseModel {
   public alternativeId: number;
 
   @column()
+  public isCorrect: boolean;
+
+  @column()
   public questionId: number;
 
   @belongsTo(() => User, { foreignKey: "userId" })
