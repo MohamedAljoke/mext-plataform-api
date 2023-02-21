@@ -1,4 +1,5 @@
 import { inject } from "@adonisjs/fold";
+import Database from "@ioc:Adonis/Lucid/Database";
 import Alternative from "App/Models/Alternative";
 import Lecture from "App/Models/Lecture";
 import UserResponse from "App/Models/UserResponse";
@@ -38,26 +39,31 @@ export default class UserQuestionServices {
   }) {
     const lecture = await Lecture.find(lectureId);
     await lecture?.load("questions");
-    const userAnsweredQuestions = await UserResponse.query()
-      .where({
-        questionId: 2,
-      })
-      .andWhere({ userId: studentId });
-    await Promise.all(
-      userAnsweredQuestions.map(async (answered) => {
-        await answered.load("alternative");
-      })
+    const userAnsweredQuestionsWithBuffer = await Database.rawQuery(
+      `
+      SELECT ur.*
+      FROM user_responses ur
+      INNER JOIN (
+        SELECT user_id, question_id, MAX(created_at) AS max_created_at
+        FROM user_responses
+        WHERE user_id = ${studentId}
+        GROUP BY user_id, question_id
+      ) max_ur ON ur.user_id = max_ur.user_id
+            AND ur.question_id = max_ur.question_id
+            AND ur.created_at = max_ur.max_created_at;
+    `
     );
-
+    const userAnsweredQuestions: UserResponse[] =
+      userAnsweredQuestionsWithBuffer[0];
     const userQuestionsInLecture = lecture?.questions.map((lectureQuestion) => {
       const didMatch = userAnsweredQuestions.find((answeredQuestion) => {
-        return answeredQuestion.questionId === lectureQuestion.id;
+        return answeredQuestion["question_id"] === lectureQuestion.id;
       });
       const lectureQuestionSerialized = lectureQuestion.serialize();
       if (didMatch) {
         return {
           ...lectureQuestionSerialized,
-          wasCorrect: didMatch.alternative.isCorrect,
+          wasCorrect: didMatch["is_correct"],
         };
       } else {
         return { ...lectureQuestionSerialized, wasCorrect: null };
