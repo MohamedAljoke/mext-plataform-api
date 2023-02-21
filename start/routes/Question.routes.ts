@@ -6,10 +6,4 @@ export default function questionRoutes() {
   })
     .prefix("/questions")
     .middleware(["auth", "role:admin"]);
-  // Route.group(() => {
-  //   Route.get("/", "LecturesController.fetchLectuers");
-  //   Route.get("/:id", "LecturesController.getLectuer");
-  // })
-  //   .prefix("/lectuers")
-  //   .middleware(["auth"]);
 }

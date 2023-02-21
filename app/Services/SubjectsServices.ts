@@ -4,8 +4,7 @@ import { subjectSerializer } from "App/Serializer/SubjectsSerializer";
 export default class SubjectsServices {
   constructor() {}
   public async fetchSubjectsService(): Promise<Subject[]> {
-    const subjects = await Subject.query();
-    await Promise.all(subjects.map((subject) => subject.load("chapters")));
+    const subjects = await Subject.query().preload("chapters");
     return subjects;
   }
   public async getSubjectService(id: number) {
