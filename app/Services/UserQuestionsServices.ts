@@ -71,9 +71,14 @@ export default class UserQuestionServices {
         return {
           ...lectureQuestionSerialized,
           wasCorrect: didMatch["is_correct"],
+          choosenAnswerId: didMatch["alternative_id"],
         };
       } else {
-        return { ...lectureQuestionSerialized, wasCorrect: null };
+        return {
+          ...lectureQuestionSerialized,
+          wasCorrect: null,
+          choosenAnswerId: null,
+        };
       }
     });
     return userQuestionsInLecture;
