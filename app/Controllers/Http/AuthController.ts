@@ -1,5 +1,6 @@
 import { inject } from "@adonisjs/fold";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import { Roles } from "App/Enums/Roles";
 import User from "App/Models/User";
 import AuthServices from "App/Services/AuthServices";
 import {
@@ -52,6 +53,29 @@ export default class AuthController {
         auth
       );
       return successResponse<TokenResponseType>(response, token);
+    } catch (e) {
+      console.error(e);
+      if (e.code.includes("E_INVALID_AUTH")) {
+        response.unauthorized({ error: "Email or password are incorrect" });
+      } else {
+        return serverErrorResponse(response);
+      }
+    }
+  }
+  public async adminLogin({ request, response, auth }: HttpContextContract) {
+    const { email, password } = await request.validate(LoginUserValidator);
+    try {
+      const token: TokenResponseType = await this.authService.login(
+        { email, password },
+        auth
+      );
+      if (Number(auth.user?.roleId) === Roles.ADMIN) {
+        return successResponse<TokenResponseType>(response, token);
+      } else {
+        return response.unauthorized({
+          error: "is not an admin",
+        });
+      }
     } catch (e) {
       console.error(e);
       if (e.code.includes("E_INVALID_AUTH")) {
