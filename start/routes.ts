@@ -8,6 +8,7 @@ import videosRoutes from "./routes/Video.routes";
 import typesRoutes from "./routes/Types.routes";
 import questionRoutes from "./routes/Question.routes";
 import userQuestionsRoutes from "./routes/UserQuestions.routes";
+import usersRoutes from "./routes/User.routes";
 
 Route.get("/version", async () => {
   return { version: "0.1" };
@@ -27,4 +28,5 @@ Route.group(() => {
   typesRoutes();
   questionRoutes();
   userQuestionsRoutes();
+  usersRoutes();
 }).prefix("/api/v1");

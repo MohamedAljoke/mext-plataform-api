@@ -13,4 +13,9 @@ export default function authRoutes() {
   })
     .prefix("/auth")
     .middleware("auth");
+  Route.group(() => {
+    Route.post("/admin-refresh", "AuthController.loginRefresh");
+  })
+    .prefix("/auth")
+    .middleware(["auth", "role:admin"]);
 }
