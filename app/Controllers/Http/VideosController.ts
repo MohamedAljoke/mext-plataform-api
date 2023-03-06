@@ -16,6 +16,15 @@ import VideoValidator, {
 export default class VideosController {
   constructor(private videsServices: VidesServices) {}
 
+  public async fetchVideosList({ response }: HttpContextContract) {
+    try {
+      const videosList = await this.videsServices.fetchVideosService();
+      return createdResponse(response, videosList);
+    } catch (error) {
+      console.log("fetch video error", error);
+      return serverErrorResponse(response);
+    }
+  }
   public async registerVideo({ response, request }: HttpContextContract) {
     const { videoName, videoUrl, typesId } = await request.validate(
       VideoValidator

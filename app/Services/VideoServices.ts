@@ -3,6 +3,11 @@ import Video from "App/Models/Video";
 
 export default class VidesServices {
   constructor() {}
+  public async fetchVideosService() {
+    const videos = await Video.query();
+
+    return videos;
+  }
   public async saveVideoService({
     video,
     typesId,
