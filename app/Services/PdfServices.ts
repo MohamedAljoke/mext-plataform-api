@@ -3,6 +3,10 @@ import Type from "App/Models/Type";
 
 export default class PdfsServices {
   constructor() {}
+  public async fetchPdfsService() {
+    const pdfs = await Pdf.query();
+    return pdfs;
+  }
   public async savePdfService({
     pdf,
     typesId,

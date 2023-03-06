@@ -14,6 +14,15 @@ import PdfValidator, { PdfUpdateValidator } from "App/Validators/PdfValidator";
 export default class PdfsController {
   constructor(private pdfsServices: PdfsServices) {}
 
+  public async fetchAllPdfsList({ response }: HttpContextContract) {
+    try {
+      const pdfs = await this.pdfsServices.fetchPdfsService();
+      return createdResponse(response, pdfs);
+    } catch (error) {
+      console.log("register pdf error", error);
+      return serverErrorResponse(response);
+    }
+  }
   public async registerPdf({ response, request }: HttpContextContract) {
     const { pdfName, pdfUrl, typesId } = await request.validate(PdfValidator);
     try {

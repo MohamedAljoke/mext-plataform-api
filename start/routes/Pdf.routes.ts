@@ -2,6 +2,7 @@ import Route from "@ioc:Adonis/Core/Route";
 
 export default function pdfsRoutes() {
   Route.group(() => {
+    Route.get("/", "PdfsController.fetchAllPdfsList");
     Route.post("/", "PdfsController.registerPdf");
     Route.put("/:id", "PdfsController.update");
     Route.delete("/:id", "PdfsController.delete");
