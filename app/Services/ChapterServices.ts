@@ -3,6 +3,11 @@ import { chapterSerializer } from "App/Serializer/ChapterSerializer";
 
 export default class ChapterServices {
   constructor() {}
+  public async fetchAllChaptersService(): Promise<Chapter[]> {
+    const chapters = await Chapter.query().preload("lectuers");
+
+    return chapters;
+  }
   public async fetchChaptersService(subjectId: number): Promise<Chapter[]> {
     const chapters = await Chapter.query()
       .where({ subjectId })

@@ -17,6 +17,15 @@ import Chapter from "App/Models/Chapter";
 @inject()
 export default class ChaptersController {
   constructor(private chapterServices: ChapterServices) {}
+  public async fetchAllChapters({ response }: HttpContextContract) {
+    try {
+      const chapters = await this.chapterServices.fetchAllChaptersService();
+      return successResponse<Chapter[]>(response, chapters);
+    } catch (error) {
+      console.log("fetch all chapters error", error);
+      return serverErrorResponse(response);
+    }
+  }
   public async fetchChapters({ request, response }: HttpContextContract) {
     const { subjectId } = request.params();
     try {
