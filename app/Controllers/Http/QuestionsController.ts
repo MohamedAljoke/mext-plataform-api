@@ -8,6 +8,15 @@ import { createdResponse, serverErrorResponse } from "App/utils/http-response";
 export default class QuestionsController {
   constructor(private questionServices: QuestionServices) {}
 
+  public async fetchAllQuestions({ response }: HttpContextContract) {
+    try {
+      const questions = await this.questionServices.fetchAllQuestionsService();
+      return createdResponse(response, questions);
+    } catch (error) {
+      console.log("fetch question error", error);
+      return serverErrorResponse(response);
+    }
+  }
   public async addQuestion({ response, request }: HttpContextContract) {
     const { lectureId, questionText, alternatives, typesId } =
       await request.validate(QuestionValidator);

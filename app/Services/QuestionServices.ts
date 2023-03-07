@@ -8,6 +8,10 @@ import Type from "App/Models/Type";
 @inject()
 export default class QuestionServices {
   constructor(private alternativasServices: AlternativasServices) {}
+  public async fetchAllQuestionsService() {
+    const questions = await Question.query();
+    return questions;
+  }
   public async createQuestionService({
     question,
     lectureId,
