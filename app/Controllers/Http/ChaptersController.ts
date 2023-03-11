@@ -81,6 +81,7 @@ export default class ChaptersController {
   }
   public async update({ request, response }: HttpContextContract) {
     const { id } = request.params();
+    console.log("did");
     const { chapterName } = await request.validate(ChapterUpdateValidator);
     try {
       const updatedSubject = await this.chapterServices.updateChapterService({
