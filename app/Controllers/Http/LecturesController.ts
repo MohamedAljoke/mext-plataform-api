@@ -51,4 +51,19 @@ export default class LecturesController {
       return serverErrorResponse(response);
     }
   }
+  public async fetchChapterLectuers({
+    request,
+    response,
+  }: HttpContextContract) {
+    const { chapterId } = request.params();
+    try {
+      const chapters = await this.lecturesServices.fetchChapterLectuersService(
+        chapterId
+      );
+      return successResponse<Lecture[]>(response, chapters);
+    } catch (error) {
+      console.log("fetch chapter lectuers error", error);
+      return serverErrorResponse(response);
+    }
+  }
 }

@@ -4,6 +4,13 @@ import Pdf from "App/Models/Pdf";
 export default class LecturesServices {
   constructor() {}
 
+  public async fetchChapterLectuersService(
+    chapterId: number
+  ): Promise<Lecture[]> {
+    const lectuers = await Lecture.query().where({ chapterId });
+
+    return lectuers;
+  }
   public async fetchLectuerService() {
     const lectuers = await Lecture.query();
 
