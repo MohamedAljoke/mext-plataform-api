@@ -4,6 +4,11 @@ import Pdf from "App/Models/Pdf";
 export default class LecturesServices {
   constructor() {}
 
+  public async deleteLectureService(id: number) {
+    const data = await Lecture.query().where({ id }).delete();
+    return data;
+  }
+
   public async fetchChapterLectuersService(
     chapterId: number
   ): Promise<Lecture[]> {

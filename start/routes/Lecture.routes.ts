@@ -3,6 +3,7 @@ import Route from "@ioc:Adonis/Core/Route";
 export default function lectureRoutes() {
   Route.group(() => {
     Route.post("/", "LecturesController.createLecture");
+    Route.delete("/:id", "LecturesController.delete");
   })
     .prefix("/lectuers")
     .middleware(["auth", "role:admin"]);
