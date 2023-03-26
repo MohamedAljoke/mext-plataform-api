@@ -1,8 +1,22 @@
 import Lecture from "App/Models/Lecture";
 import Pdf from "App/Models/Pdf";
+import { lectureSerializer } from "App/Serializer/LectureSerializer";
 
 export default class LecturesServices {
   constructor() {}
+
+  public async updateLectureService({
+    id,
+    lectureName,
+  }: {
+    id: number;
+    lectureName: string;
+  }) {
+    const lecture = await Lecture.findOrFail(id);
+    const updatedLecture = await lecture.merge({ ...{ lectureName } }).save();
+    const serialized = updatedLecture.serialize(lectureSerializer);
+    return serialized;
+  }
 
   public async deleteLectureService(id: number) {
     const data = await Lecture.query().where({ id }).delete();

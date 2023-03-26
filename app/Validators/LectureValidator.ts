@@ -25,3 +25,12 @@ export class CreateLectureValidator extends BaseValidator {
       ),
   });
 }
+export class LectureUpdateValidator extends BaseValidator {
+  constructor(protected ctx: HttpContextContract) {
+    super(ctx);
+  }
+
+  public schema = schema.create({
+    lectureName: schema.string(),
+  });
+}

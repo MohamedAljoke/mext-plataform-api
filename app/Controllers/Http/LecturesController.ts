@@ -1,12 +1,16 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { inject } from "@adonisjs/fold";
-import { CreateLectureValidator } from "App/Validators/LectureValidator";
+import {
+  CreateLectureValidator,
+  LectureUpdateValidator,
+} from "App/Validators/LectureValidator";
 import LecturesServices from "App/Services/LectureService";
 import {
   badRequestResponse,
   createdResponse,
   serverErrorResponse,
   successResponse,
+  updatedResponse,
 } from "App/utils/http-response";
 import Lecture from "App/Models/Lecture";
 
@@ -79,6 +83,21 @@ export default class LecturesController {
       return successResponse<number>(response, numberoFLectures[0]);
     } catch (error) {
       console.log("delete lecture error", error);
+      return serverErrorResponse(response);
+    }
+  }
+
+  public async update({ request, response }: HttpContextContract) {
+    const { id } = request.params();
+    const { lectureName } = await request.validate(LectureUpdateValidator);
+    try {
+      const updatedLecture = await this.lecturesServices.updateLectureService({
+        id,
+        lectureName,
+      });
+      return updatedResponse(response, updatedLecture);
+    } catch (error) {
+      console.log("update subject error", error);
       return serverErrorResponse(response);
     }
   }
