@@ -40,9 +40,29 @@ export default class LecturesServices {
     const lectuers = await Lecture.query()
       .where({ id })
       .preload("pdfs")
-      .preload("video");
-    const lectuer = lectuers[0];
-    return lectuer;
+      .preload("video")
+      .preload("questions");
+    const lecture = lectuers[0];
+    if (lecture?.questions) {
+      await Promise.all(
+        lecture?.questions.map((question) => {
+          question.load("alternatives");
+          question.load("types");
+        })
+      );
+    }
+    if (lecture?.video) {
+      await lecture.video.load("types");
+    }
+    if (lecture.pdfs) {
+      await Promise.all(
+        lecture.pdfs.map((pdf) => {
+          pdf.load("types");
+        })
+      );
+    }
+
+    return lecture;
   }
 
   public async createLectureService({

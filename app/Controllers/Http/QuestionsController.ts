@@ -2,7 +2,13 @@ import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { inject } from "@adonisjs/fold";
 import QuestionServices from "App/Services/QuestionServices";
 import QuestionValidator from "App/Validators/QuestionValidator";
-import { createdResponse, serverErrorResponse } from "App/utils/http-response";
+import {
+  badRequestResponse,
+  createdResponse,
+  serverErrorResponse,
+  successResponse,
+} from "App/utils/http-response";
+import Question from "App/Models/Question";
 
 @inject()
 export default class QuestionsController {
@@ -32,6 +38,19 @@ export default class QuestionsController {
       return createdResponse(response, createdQuestion);
     } catch (error) {
       console.log("add question error", error);
+      return serverErrorResponse(response);
+    }
+  }
+  public async getQuestion({ request, response }: HttpContextContract) {
+    const { id } = request.params();
+    try {
+      const question = await this.questionServices.getQuestionService(id);
+      if (!question) {
+        return badRequestResponse(response, "question not found");
+      }
+      return successResponse<Question | null>(response, question);
+    } catch (error) {
+      console.log("get question error", error);
       return serverErrorResponse(response);
     }
   }

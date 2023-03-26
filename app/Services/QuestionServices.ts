@@ -8,6 +8,15 @@ import Type from "App/Models/Type";
 @inject()
 export default class QuestionServices {
   constructor(private alternativasServices: AlternativasServices) {}
+  public async getQuestionService(id: number) {
+    const question = await Question.query()
+      .where({ id })
+      .preload("alternatives")
+      .preload("lectuers")
+      .preload("types");
+
+    return question[0];
+  }
   public async fetchAllQuestionsService() {
     const questions = await Question.query();
     return questions;
