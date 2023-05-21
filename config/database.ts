@@ -1,6 +1,9 @@
 import Env from "@ioc:Adonis/Core/Env";
 import { DatabaseConfig } from "@ioc:Adonis/Lucid/Database";
 
+const PROD_MYSQL_DB = new URL(Env.get("CLEARDB_DATABASE_URL"));
+
+console.log(PROD_MYSQL_DB);
 const databaseConfig: DatabaseConfig = {
   /*
   |--------------------------------------------------------------------------
@@ -29,11 +32,26 @@ const databaseConfig: DatabaseConfig = {
     mysql: {
       client: "mysql2",
       connection: {
-        host: Env.get("MYSQL_HOST"),
-        port: Env.get("MYSQL_PORT"),
-        user: Env.get("MYSQL_USER"),
-        password: Env.get("MYSQL_PASSWORD", ""),
-        database: Env.get("MYSQL_DB_NAME"),
+        host:
+          Env.get("NODE_ENV") === "development"
+            ? Env.get("MYSQL_HOST")
+            : Env.get("DB_HOST", PROD_MYSQL_DB.host),
+        port:
+          Env.get("NODE_ENV") === "development"
+            ? Env.get("MYSQL_PORT")
+            : Env.get("DB_PORT", ""),
+        user:
+          Env.get("NODE_ENV") === "development"
+            ? Env.get("MYSQL_USER")
+            : Env.get("DB_USER", PROD_MYSQL_DB.username),
+        password:
+          Env.get("NODE_ENV") === "development"
+            ? Env.get("MYSQL_PASSWORD", "")
+            : Env.get("DB_PASSWORD", PROD_MYSQL_DB.password),
+        database:
+          Env.get("NODE_ENV") === "development"
+            ? Env.get("MYSQL_DB_NAME")
+            : Env.get("DB_DATABASE", PROD_MYSQL_DB.pathname.substr(1)),
       },
       migrations: {
         disableRollbacksInProduction: true,
