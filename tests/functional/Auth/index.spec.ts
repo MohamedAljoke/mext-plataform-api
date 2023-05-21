@@ -1,8 +1,5 @@
 import { test } from "@japa/runner";
 import Database from "@ioc:Adonis/Lucid/Database";
-import { loginData, registerUserData } from "./mock";
-
-import User from "App/Models/User";
 
 test.group("Auth index", (group) => {
   group.each.setup(async () => {
