@@ -9,6 +9,7 @@ test.group("Auth index", (group) => {
     await Database.beginGlobalTransaction();
     return () => Database.rollbackGlobalTransaction();
   });
+  test("Should login user successfully and receives token", async () => {});
   // test("Should register user and receives user data", async ({
   //   client,
   //   assert,
