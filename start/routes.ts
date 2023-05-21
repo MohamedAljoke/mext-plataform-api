@@ -11,7 +11,7 @@ import userQuestionsRoutes from "./routes/UserQuestions.routes";
 import usersRoutes from "./routes/User.routes";
 
 Route.get("/version", async () => {
-  return { version: "0.1" };
+  return { version: "0.2" };
 });
 
 Route.get("/", async ({ response }) => {
