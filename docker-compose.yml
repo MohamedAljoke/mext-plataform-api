@@ -1,0 +1,15 @@
+version: '3'
+services:
+  my-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - CLEARDB_DATABASE_URL=$CLEARDB_DATABASE_URL
+        - NODE_ENV=$NODE_ENV
+
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+

@@ -2,7 +2,6 @@ import Env from "@ioc:Adonis/Core/Env";
 import { DatabaseConfig } from "@ioc:Adonis/Lucid/Database";
 
 const PROD_MYSQL_DB = new URL(Env.get("CLEARDB_DATABASE_URL"));
-console.log(PROD_MYSQL_DB);
 const databaseConfig: DatabaseConfig = {
   /*
   |--------------------------------------------------------------------------
@@ -38,7 +37,7 @@ const databaseConfig: DatabaseConfig = {
         port:
           Env.get("NODE_ENV") === "development"
             ? Env.get("MYSQL_PORT")
-            : Env.get("DB_PORT", ""),
+            : Env.get("MYSQL_PORT"),
         user:
           Env.get("NODE_ENV") === "development"
             ? Env.get("MYSQL_USER")
@@ -51,6 +50,9 @@ const databaseConfig: DatabaseConfig = {
           Env.get("NODE_ENV") === "development"
             ? Env.get("MYSQL_DB_NAME")
             : Env.get("DB_DATABASE", PROD_MYSQL_DB.pathname.substr(1)),
+        ssl: {
+          rejectUnauthorized: false,
+        },
       },
       migrations: {
         disableRollbacksInProduction: true,
