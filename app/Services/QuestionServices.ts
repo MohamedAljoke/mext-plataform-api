@@ -28,16 +28,18 @@ export default class QuestionServices {
     typesId,
   }: {
     question: Partial<Question>;
-    lectureId: number[];
+    lectureId?: number[];
     typesId?: number[];
     alternatives: Partial<Alternative>[];
   }) {
     const addedQuestion = await Question.create(question);
-    const lectrue = await Lecture.query().whereIn("id", lectureId);
-    await addedQuestion
-      .related("lectuers")
-      .attach(lectrue.map((lectrue) => lectrue.id));
-    await addedQuestion.load("lectuers");
+    if (lectureId?.length) {
+      const lectrue = await Lecture.query().whereIn("id", lectureId);
+      await addedQuestion
+        .related("lectuers")
+        .attach(lectrue.map((lectrue) => lectrue.id));
+      await addedQuestion.load("lectuers");
+    }
     //add alternatives
     await Promise.all(
       alternatives.map(async (alternative) => {

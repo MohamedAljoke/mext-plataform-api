@@ -10,8 +10,8 @@ export default class QuestionValidator extends BaseValidator {
   }
 
   public schema = schema.create({
-    lectureId: schema
-      .array()
+    lectureId: schema.array
+      .optional()
       .members(
         schema.number([rules.exists({ table: Lecture.table, column: "id" })])
       ),
