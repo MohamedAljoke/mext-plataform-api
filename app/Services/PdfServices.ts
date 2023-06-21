@@ -23,7 +23,6 @@ export default class PdfsServices {
       await addedPdf.related("types").attach(type.map((role) => role.id));
       await addedPdf.load("types");
     }
-    console.log("lectureId", lectureId);
     if (lectureId) {
       const lectrue = await Lecture.query().where("id", lectureId);
       await addedPdf
