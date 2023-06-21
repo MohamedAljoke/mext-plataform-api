@@ -1,3 +1,4 @@
+import Lecture from "App/Models/Lecture";
 import Pdf from "App/Models/Pdf";
 import Type from "App/Models/Type";
 
@@ -10,7 +11,9 @@ export default class PdfsServices {
   public async savePdfService({
     pdf,
     typesId,
+    lectureId,
   }: {
+    lectureId?: number;
     pdf: Partial<Pdf>;
     typesId: number[] | undefined;
   }) {
@@ -19,6 +22,12 @@ export default class PdfsServices {
       const type = await Type.query().whereIn("id", typesId);
       await addedPdf.related("types").attach(type.map((role) => role.id));
       await addedPdf.load("types");
+    }
+    if (lectureId) {
+      const lectrue = await Lecture.query().where("id", lectureId);
+      await addedPdf
+        .related("lectuers")
+        .attach(lectrue.map((lectrue) => lectrue.id));
     }
     return addedPdf;
   }

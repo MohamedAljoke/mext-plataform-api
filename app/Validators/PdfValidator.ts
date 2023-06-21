@@ -2,6 +2,7 @@ import { schema, rules } from "@ioc:Adonis/Core/Validator";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { BaseValidator } from "./BaseValidator";
 import Type from "App/Models/Type";
+import Lecture from "App/Models/Lecture";
 
 export default class PdfValidator extends BaseValidator {
   constructor(protected ctx: HttpContextContract) {
@@ -9,6 +10,9 @@ export default class PdfValidator extends BaseValidator {
   }
 
   public schema = schema.create({
+    lectureId: schema.number.optional([
+      rules.exists({ table: Lecture.table, column: "id" }),
+    ]),
     pdfName: schema.string(),
     pdfUrl: schema.string(),
     typesId: schema.array

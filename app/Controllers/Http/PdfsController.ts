@@ -24,10 +24,13 @@ export default class PdfsController {
     }
   }
   public async registerPdf({ response, request }: HttpContextContract) {
-    const { pdfName, pdfUrl, typesId } = await request.validate(PdfValidator);
+    const { pdfName, pdfUrl, typesId, lectureId } = await request.validate(
+      PdfValidator
+    );
     try {
       const createdSubject = await this.pdfsServices.savePdfService({
         pdf: { pdfName, pdfUrl },
+        lectureId,
         typesId,
       });
       return createdResponse(response, createdSubject);
