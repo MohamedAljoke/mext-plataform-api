@@ -56,4 +56,8 @@ export default class QuestionServices {
     await addedQuestion.load("alternatives");
     return addedQuestion;
   }
+  public async deleteQuestionService(id: number) {
+    const data = await Question.query().where({ id }).delete();
+    return data;
+  }
 }
