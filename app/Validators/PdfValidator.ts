@@ -30,5 +30,10 @@ export class PdfUpdateValidator extends BaseValidator {
   public schema = schema.create({
     pdfName: schema.string.optional(),
     pdfUrl: schema.string.optional(),
+    typesId: schema.array
+      .optional()
+      .members(
+        schema.number([rules.exists({ table: Type.table, column: "id" })])
+      ),
   });
 }

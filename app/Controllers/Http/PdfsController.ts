@@ -54,12 +54,15 @@ export default class PdfsController {
   }
   public async update({ request, response }: HttpContextContract) {
     const { id } = request.params();
-    const { pdfName, pdfUrl } = await request.validate(PdfUpdateValidator);
+    const { pdfName, pdfUrl, typesId } = await request.validate(
+      PdfUpdateValidator
+    );
     try {
       const updatedPdf = await this.pdfsServices.updatePdfService({
         id,
         pdfUrl,
         pdfName,
+        typesId,
       });
       return updatedResponse(response, updatedPdf);
     } catch (error) {

@@ -55,7 +55,7 @@ export default class VideosController {
   }
   public async update({ request, response }: HttpContextContract) {
     const { id } = request.params();
-    const { videoName, videoUrl } = await request.validate(
+    const { videoName, videoUrl, typesId } = await request.validate(
       VideoUpdateValidator
     );
     try {
@@ -63,6 +63,7 @@ export default class VideosController {
         id,
         videoName,
         videoUrl,
+        typesId,
       });
       return updatedResponse(response, updatedPdf);
     } catch (error) {

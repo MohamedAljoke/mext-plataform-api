@@ -31,10 +31,12 @@ export default class VidesServices {
     id,
     videoName,
     videoUrl,
+    typesId,
   }: {
     id: number;
     videoName?: string;
     videoUrl?: string;
+    typesId: number[] | undefined;
   }) {
     const video = await Video.findOrFail(id);
     if (videoName) {
@@ -42,6 +44,10 @@ export default class VidesServices {
     }
     if (videoUrl) {
       video.videoUrl = videoUrl; //
+    }
+    if (typesId !== undefined) {
+      const types = await Type.query().whereIn("id", typesId);
+      await video.related("types").sync(types.map((type) => type.id));
     }
     await video.save();
     return video;

@@ -26,5 +26,10 @@ export class VideoUpdateValidator extends BaseValidator {
   public schema = schema.create({
     videoName: schema.string.optional(),
     videoUrl: schema.string.optional(),
+    typesId: schema.array
+      .optional()
+      .members(
+        schema.number([rules.exists({ table: Type.table, column: "id" })])
+      ),
   });
 }

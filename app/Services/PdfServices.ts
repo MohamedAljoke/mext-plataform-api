@@ -39,10 +39,12 @@ export default class PdfsServices {
     id,
     pdfName,
     pdfUrl,
+    typesId,
   }: {
     id: number;
     pdfName?: string;
     pdfUrl?: string;
+    typesId: number[] | undefined;
   }) {
     const pdf = await Pdf.findOrFail(id);
     if (pdfName) {
@@ -50,6 +52,10 @@ export default class PdfsServices {
     }
     if (pdfUrl) {
       pdf.pdfUrl = pdfUrl; //
+    }
+    if (typesId !== undefined) {
+      const types = await Type.query().whereIn("id", typesId);
+      await pdf.related("types").sync(types.map((type) => type.id));
     }
     await pdf.save();
     return pdf;
