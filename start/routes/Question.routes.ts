@@ -7,6 +7,7 @@ export default function questionRoutes() {
   })
     .prefix("/questions")
     .middleware(["auth", "role:admin"]);
+
   Route.group(() => {
     Route.get("/", "QuestionsController.fetchAllQuestions");
     Route.get("/:id", "QuestionsController.getQuestion");

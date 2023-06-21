@@ -7,8 +7,16 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments("id");
 
-      table.integer("lecture_id").unsigned().references("lectures.id");
-      table.integer("question_id").unsigned().references("questions.id");
+      table
+        .integer("lecture_id")
+        .unsigned()
+        .references("lectures.id")
+        .onDelete("CASCADE");
+      table
+        .integer("question_id")
+        .unsigned()
+        .references("questions.id")
+        .onDelete("CASCADE");
 
       table.dateTime("created_at", { useTz: true });
       table.dateTime("updated_at", { useTz: true });

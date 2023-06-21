@@ -6,8 +6,16 @@ export default class extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments("id");
-      table.integer("lecture_id").unsigned().references("lectures.id");
-      table.integer("pdf_id").unsigned().references("pdfs.id");
+      table
+        .integer("lecture_id")
+        .unsigned()
+        .references("lectures.id")
+        .onDelete("CASCADE");
+      table
+        .integer("pdf_id")
+        .unsigned()
+        .references("pdfs.id")
+        .onDelete("CASCADE");
 
       table.dateTime("created_at", { useTz: true });
       table.dateTime("updated_at", { useTz: true });
