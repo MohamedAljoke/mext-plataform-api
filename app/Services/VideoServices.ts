@@ -5,7 +5,11 @@ export default class VidesServices {
   constructor() {}
   public async fetchVideosService() {
     const videos = await Video.query();
-
+    await Promise.all(
+      videos?.map(async (video) => {
+        await video.load("types");
+      })
+    );
     return videos;
   }
   public async saveVideoService({

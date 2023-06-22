@@ -6,6 +6,11 @@ export default class PdfsServices {
   constructor() {}
   public async fetchPdfsService() {
     const pdfs = await Pdf.query();
+    await Promise.all(
+      pdfs?.map(async (pdf) => {
+        await pdf.load("types");
+      })
+    );
     return pdfs;
   }
   public async savePdfService({
@@ -53,6 +58,7 @@ export default class PdfsServices {
     if (pdfUrl) {
       pdf.pdfUrl = pdfUrl; //
     }
+
     if (typesId !== undefined) {
       const types = await Type.query().whereIn("id", typesId);
       await pdf.related("types").sync(types.map((type) => type.id));
