@@ -6,11 +6,13 @@ FROM node:${NODE_VERSION}-slim as base
 
 LABEL fly_launch_runtime="AdonisJS"
 
+
+
 # AdonisJS app lives here
 WORKDIR /app
+COPY .env /app/.env
 
-ARG CLEARDB_DATABASE_URL
-ARG NODE_ENV
+
 # Set production environment
 ENV NODE_ENV=production
 ENV HOST="0.0.0.0"
@@ -18,15 +20,14 @@ ENV PORT="3000"
 ENV CACHE_VIEWS="true"
 ENV SESSION_DRIVER="cookie"
 ENV DRIVE_DISK="local"
-ENV APP_KEY="Q0CwsMQqtL8LseO9n1fr5tan9QJz8_"
-ENV NODE_ENV=${NODE_ENV}
 ENV DB_CONNECTION="mysql"
 ENV MYSQL_HOST="localhost"
 ENV MYSQL_PORT="3306"
 ENV MYSQL_USER="mext"
 ENV MYSQL_PASSWORD="mextmysql"
 ENV MYSQL_DB_NAME="mext"
-ENV CLEARDB_DATABASE_URL=${CLEARDB_DATABASE_URL}
+ENV FRONT_URL="https://mext-front.vercel.app"
+ENV FRONT_ADMIN_URL="https://mext-admin.vercel.app"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build

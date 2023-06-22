@@ -5,9 +5,23 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - CLEARDB_DATABASE_URL=$CLEARDB_DATABASE_URL
-        - NODE_ENV=$NODE_ENV
-
+        - CLEARDB_DATABASE_URL=${CLEARDB_DATABASE_URL}
+        - NODE_ENV=${NODE_ENV}
+        - HOST=${HOST}
+        - PORT=${PORT}
+        - CACHE_VIEWS=${CACHE_VIEWS}
+        - SESSION_DRIVER=${SESSION_DRIVER}
+        - DRIVE_DISK=${DRIVE_DISK}
+        - APP_KEY=${APP_KEY}
+        - NODE-${NODE}
+        - DB_CONNECTION=${DB_CONNECTION}
+        - MYSQL_HOST=${MYSQL_HOST}
+        - MYSQL_PORT=${MYSQL_PORT}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_DB_NAME=${MYSQL_DB_NAME}
+        - FRONT_URL=${FRONT_URL}
+        - FRONT_ADMIN_URL=${FRONT_ADMIN_URL}
     ports:
       - 3000:3000
     env_file:
