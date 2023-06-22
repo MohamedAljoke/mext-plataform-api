@@ -2,6 +2,7 @@ import Env from "@ioc:Adonis/Core/Env";
 import { DatabaseConfig } from "@ioc:Adonis/Lucid/Database";
 
 const PROD_MYSQL_DB = new URL(Env.get("CLEARDB_DATABASE_URL"));
+console.log("PROD_MYSQL_DB", PROD_MYSQL_DB);
 const databaseConfig: DatabaseConfig = {
   /*
   |--------------------------------------------------------------------------
