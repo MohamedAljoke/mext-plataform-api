@@ -23,7 +23,7 @@ services:
         - FRONT_URL=${FRONT_URL}
         - FRONT_ADMIN_URL=${FRONT_ADMIN_URL}
     ports:
-      - 3000:3000
+      - 8000:8000
     env_file:
       - .env
 

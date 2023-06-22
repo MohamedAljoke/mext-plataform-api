@@ -9,16 +9,11 @@ import typesRoutes from "./routes/Types.routes";
 import questionRoutes from "./routes/Question.routes";
 import userQuestionsRoutes from "./routes/UserQuestions.routes";
 import usersRoutes from "./routes/User.routes";
-import swaggerConfig from "Config/swagger";
-import swaggerJSDoc from "swagger-jsdoc";
 
 Route.get("/version", async () => {
   return { version: "0.2" };
 });
-Route.get("/swagger.json", async () => {
-  const swaggerSpecs = swaggerJSDoc(swaggerConfig.options);
-  return swaggerSpecs;
-});
+
 Route.get("/", async ({ response }) => {
   return response.redirect("/docs");
 });
