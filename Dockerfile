@@ -6,12 +6,8 @@ FROM node:${NODE_VERSION}-slim as base
 
 LABEL fly_launch_runtime="AdonisJS"
 
-
-
 # AdonisJS app lives here
 WORKDIR /app
-COPY .env /app/.env
-
 
 # Set production environment
 ENV NODE_ENV=production
