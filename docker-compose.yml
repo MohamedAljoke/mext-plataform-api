@@ -30,6 +30,22 @@ services:
       - 8000:8000
     env_file:
       - .env
+ 
+  database-mext-mysql:
+    container_name: db-container
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'mext'
+      MYSQL_USER: 'mext'
+      MYSQL_PASSWORD: 'mextmysql'
+      MYSQL_ROOT_PASSWORD: 'mextmysql'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
   mext_redis:
     image: redis:alpine
     restart: always
@@ -37,3 +53,8 @@ services:
       - .env
     ports:
       - '6379:6379'
+
+
+volumes:
+  my-db:
+    driver: local
