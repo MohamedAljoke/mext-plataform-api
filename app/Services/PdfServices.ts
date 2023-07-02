@@ -26,7 +26,7 @@ export default class PdfsServices {
     await stringifyCacheData({
       data: pdfs,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.PDF_LIST,
+      key: redisKeys.PDF_LIST(),
     });
     return pdfs;
   }

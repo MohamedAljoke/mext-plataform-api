@@ -19,7 +19,7 @@ export default class TypesServices {
     await stringifyCacheData({
       data: types,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.TYPE_LIST,
+      key: redisKeys.TYPE_LIST(),
     });
     return types;
   }

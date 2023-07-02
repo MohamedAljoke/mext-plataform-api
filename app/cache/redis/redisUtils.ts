@@ -6,8 +6,7 @@ export interface IParseCachedData {
   id?: string;
 }
 export interface IStringifyCacheData {
-  key: RedisKeys[keyof RedisKeys];
-  id?: string;
+  key: string;
   data: any;
   timmer: number;
 }
@@ -31,12 +30,11 @@ export const stringifyCacheData = async ({
   key,
   data,
   timmer,
-  id,
 }: IStringifyCacheData) => {
   const stringifyedData = Array.isArray(data)
     ? JSON.stringify(data.map((item) => JSON.stringify(item)))
     : JSON.stringify(data);
-  await Redis.set(key(id || ""), stringifyedData, "EX", timmer);
+  await Redis.set(key, stringifyedData, "EX", timmer);
 };
 export const removeCache = async ({ keys }: { keys: string[] }) => {
   await Redis.del(keys);

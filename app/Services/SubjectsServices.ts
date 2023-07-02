@@ -20,7 +20,7 @@ export default class SubjectsServices {
     await stringifyCacheData({
       data: subjects,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.SUBJECTS_LIST,
+      key: redisKeys.SUBJECTS_LIST(),
     });
     return subjects;
   }
@@ -42,8 +42,7 @@ export default class SubjectsServices {
     await stringifyCacheData({
       data: subject,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.SUBJECT_BY_ID,
-      id: id.toString(),
+      key: redisKeys.SUBJECT_BY_ID(id.toString()),
     });
     return subject;
   }

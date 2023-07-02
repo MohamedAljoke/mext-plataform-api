@@ -22,7 +22,7 @@ export default class LecturesServices {
     await stringifyCacheData({
       data: lectuers,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.LECTURES_LIST,
+      key: redisKeys.LECTURES_LIST(),
     });
     return lectuers;
   }
@@ -41,8 +41,7 @@ export default class LecturesServices {
     await stringifyCacheData({
       data: lectuers,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.CHAPTER_BY_SUBJECT_ID,
-      id: chapterId.toString(),
+      key: redisKeys.LECTURE_BY_CHAPTER_ID(chapterId.toString()),
     });
     return lectuers;
   }
@@ -82,8 +81,7 @@ export default class LecturesServices {
     await stringifyCacheData({
       data: lecture,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.CHAPTER_BY_ID,
-      id: id.toString(),
+      key: redisKeys.CHAPTER_BY_ID(id.toString()),
     });
     return lecture;
   }

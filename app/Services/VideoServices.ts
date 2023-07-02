@@ -25,7 +25,7 @@ export default class VidesServices {
     await stringifyCacheData({
       data: videos,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.VIDEO_LIST,
+      key: redisKeys.VIDEO_LIST(),
     });
     return videos;
   }

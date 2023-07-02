@@ -20,7 +20,7 @@ export default class UsersServices {
     await stringifyCacheData({
       data: users,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.USERS_LIST,
+      key: redisKeys.USERS_LIST(),
     });
     return users;
   }

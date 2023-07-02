@@ -20,7 +20,7 @@ export default class ChapterServices {
     await stringifyCacheData({
       data: chapters,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.CHPATERS_LIST,
+      key: redisKeys.CHPATERS_LIST(),
     });
     return chapters;
   }
@@ -38,8 +38,7 @@ export default class ChapterServices {
     await stringifyCacheData({
       data: chapters,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.CHAPTER_BY_SUBJECT_ID,
-      id: subjectId.toString(),
+      key: redisKeys.CHAPTER_BY_SUBJECT_ID(subjectId.toString()),
     });
     return chapters;
   }
@@ -56,8 +55,7 @@ export default class ChapterServices {
     await stringifyCacheData({
       data: chapter,
       timmer: timmerInSeconds.ONE_DAY,
-      key: redisKeys.CHAPTER_BY_ID,
-      id: id.toString(),
+      key: redisKeys.CHAPTER_BY_ID(id.toString()),
     });
     return chapter;
   }
