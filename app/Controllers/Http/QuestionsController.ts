@@ -59,10 +59,8 @@ export default class QuestionsController {
     try {
       const numberOfQuestions =
         await this.questionServices.deleteQuestionService(id);
-      if (numberOfQuestions[0] === 0) {
-        return badRequestResponse(response, "Question not found");
-      }
-      return successResponse<number>(response, numberOfQuestions[0]);
+
+      return successResponse(response, {});
     } catch (error) {
       console.log("Question pdf error", error);
       return serverErrorResponse(response);

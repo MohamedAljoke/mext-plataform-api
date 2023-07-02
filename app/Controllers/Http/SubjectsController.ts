@@ -55,10 +55,8 @@ export default class SubjectsController {
       const numberOfSubjects = await this.subjectsServices.deleteSubjectService(
         id
       );
-      if (numberOfSubjects[0] === 0) {
-        return badRequestResponse(response, "Subject not found");
-      }
-      return successResponse<number>(response, numberOfSubjects[0]);
+
+      return successResponse(response, {});
     } catch (error) {
       console.log("delete subject error", error);
       return serverErrorResponse(response);

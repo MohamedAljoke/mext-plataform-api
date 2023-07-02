@@ -41,10 +41,8 @@ export default class TypesController {
     const { id } = request.params();
     try {
       const numberOfTypes = await this.typesServices.deleteTypeService(id);
-      if (numberOfTypes[0] === 0) {
-        return badRequestResponse(response, "type not found");
-      }
-      return successResponse<number>(response, numberOfTypes[0]);
+
+      return successResponse(response, {});
     } catch (error) {
       console.log("delete type error", error);
       return serverErrorResponse(response);

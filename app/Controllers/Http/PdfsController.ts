@@ -43,10 +43,8 @@ export default class PdfsController {
     const { id } = request.params();
     try {
       const numberOfPdfs = await this.pdfsServices.deletePdfService(id);
-      if (numberOfPdfs[0] === 0) {
-        return badRequestResponse(response, "Pdf not found");
-      }
-      return successResponse<number>(response, numberOfPdfs[0]);
+
+      return successResponse(response, {});
     } catch (error) {
       console.log("delete pdf error", error);
       return serverErrorResponse(response);

@@ -44,10 +44,8 @@ export default class VideosController {
     const { id } = request.params();
     try {
       const numberOfVideos = await this.videsServices.deleteVideoService(id);
-      if (numberOfVideos[0] === 0) {
-        return badRequestResponse(response, "video not found");
-      }
-      return successResponse<number>(response, numberOfVideos[0]);
+
+      return successResponse(response, {});
     } catch (error) {
       console.log("delete video error", error);
       return serverErrorResponse(response);

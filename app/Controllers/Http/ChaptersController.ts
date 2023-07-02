@@ -70,10 +70,8 @@ export default class ChaptersController {
       const numberOfChapters = await this.chapterServices.deleteChapterService(
         id
       );
-      if (numberOfChapters[0] === 0) {
-        return badRequestResponse(response, "Chapter not found");
-      }
-      return successResponse<number>(response, numberOfChapters[0]);
+
+      return successResponse(response, {});
     } catch (error) {
       console.log("delete chapter error", error);
       return serverErrorResponse(response);

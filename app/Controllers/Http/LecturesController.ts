@@ -77,10 +77,8 @@ export default class LecturesController {
       const numberoFLectures = await this.lecturesServices.deleteLectureService(
         id
       );
-      if (numberoFLectures[0] === 0) {
-        return badRequestResponse(response, "lecture not found");
-      }
-      return successResponse<number>(response, numberoFLectures[0]);
+
+      return successResponse(response, {});
     } catch (error) {
       console.log("delete lecture error", error);
       return serverErrorResponse(response);
