@@ -27,19 +27,21 @@ services:
         - REDIS_PORT=${REDIS_PORT}
         - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
-      - 8000:8000
+      - ${PORT}:${PORT}
     env_file:
       - .env
- 
+    depends_on:
+      - database-mext-mysql
+
   database-mext-mysql:
-    container_name: db-container
+    container_name: mext_db
     image: mysql:8.0
     restart: always
     environment:
       MYSQL_DATABASE: 'mext'
       MYSQL_USER: 'mext'
       MYSQL_PASSWORD: 'mextmysql'
-      MYSQL_ROOT_PASSWORD: 'mextmysql'
+      MYSQL_DB_NAME: 'mext'
     ports:
       - '3306:3306'
     expose:
@@ -53,8 +55,6 @@ services:
       - .env
     ports:
       - '6379:6379'
-
-
 volumes:
   my-db:
     driver: local
