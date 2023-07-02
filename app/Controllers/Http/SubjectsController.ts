@@ -52,9 +52,7 @@ export default class SubjectsController {
   public async delete({ request, response }: HttpContextContract) {
     const { id } = request.params();
     try {
-      const numberOfSubjects = await this.subjectsServices.deleteSubjectService(
-        id
-      );
+      await this.subjectsServices.deleteSubjectService(id);
 
       return successResponse(response, {});
     } catch (error) {

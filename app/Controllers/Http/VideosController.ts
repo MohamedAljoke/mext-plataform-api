@@ -1,7 +1,6 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { inject } from "@adonisjs/fold";
 import {
-  badRequestResponse,
   createdResponse,
   serverErrorResponse,
   successResponse,
@@ -43,7 +42,7 @@ export default class VideosController {
   public async delete({ request, response }: HttpContextContract) {
     const { id } = request.params();
     try {
-      const numberOfVideos = await this.videsServices.deleteVideoService(id);
+      await this.videsServices.deleteVideoService(id);
 
       return successResponse(response, {});
     } catch (error) {

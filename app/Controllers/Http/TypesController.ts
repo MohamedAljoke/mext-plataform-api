@@ -2,7 +2,6 @@ import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import TypesServices from "App/Services/TypeServices";
 import TypeValidator from "App/Validators/TypeValidator";
 import {
-  badRequestResponse,
   createdResponse,
   serverErrorResponse,
   successResponse,
@@ -40,7 +39,7 @@ export default class TypesController {
   public async delete({ request, response }: HttpContextContract) {
     const { id } = request.params();
     try {
-      const numberOfTypes = await this.typesServices.deleteTypeService(id);
+      await this.typesServices.deleteTypeService(id);
 
       return successResponse(response, {});
     } catch (error) {

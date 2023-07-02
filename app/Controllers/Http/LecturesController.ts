@@ -74,9 +74,7 @@ export default class LecturesController {
   public async delete({ request, response }: HttpContextContract) {
     const { id } = request.params();
     try {
-      const numberoFLectures = await this.lecturesServices.deleteLectureService(
-        id
-      );
+      await this.lecturesServices.deleteLectureService(id);
 
       return successResponse(response, {});
     } catch (error) {

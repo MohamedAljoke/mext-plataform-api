@@ -132,7 +132,12 @@ export default class LecturesServices {
       await lectuers.load("pdfs");
     }
     await removeCache({
-      keys: [redisKeys.LECTURES_LIST()],
+      keys: [
+        redisKeys.LECTURES_LIST(),
+        redisKeys.LECTURE_BY_CHAPTER_ID(
+          lecture.chapterId ? lecture.chapterId.toString() : ""
+        ),
+      ],
     });
     return lectuers;
   }

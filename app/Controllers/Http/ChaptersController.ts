@@ -67,9 +67,7 @@ export default class ChaptersController {
   public async delete({ request, response }: HttpContextContract) {
     const { id } = request.params();
     try {
-      const numberOfChapters = await this.chapterServices.deleteChapterService(
-        id
-      );
+      await this.chapterServices.deleteChapterService(id);
 
       return successResponse(response, {});
     } catch (error) {

@@ -57,8 +57,7 @@ export default class QuestionsController {
   public async delete({ request, response }: HttpContextContract) {
     const { id } = request.params();
     try {
-      const numberOfQuestions =
-        await this.questionServices.deleteQuestionService(id);
+      await this.questionServices.deleteQuestionService(id);
 
       return successResponse(response, {});
     } catch (error) {

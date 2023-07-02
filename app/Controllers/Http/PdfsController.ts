@@ -1,7 +1,6 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { inject } from "@adonisjs/fold";
 import {
-  badRequestResponse,
   createdResponse,
   serverErrorResponse,
   successResponse,
@@ -42,7 +41,7 @@ export default class PdfsController {
   public async delete({ request, response }: HttpContextContract) {
     const { id } = request.params();
     try {
-      const numberOfPdfs = await this.pdfsServices.deletePdfService(id);
+      await this.pdfsServices.deletePdfService(id);
 
       return successResponse(response, {});
     } catch (error) {

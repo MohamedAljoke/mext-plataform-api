@@ -99,7 +99,10 @@ export default class ChapterServices {
   }): Promise<Chapter> {
     const created = await Chapter.create({ chapterName, subjectId });
     await removeCache({
-      keys: [redisKeys.CHPATERS_LIST()],
+      keys: [
+        redisKeys.CHPATERS_LIST(),
+        redisKeys.CHAPTER_BY_SUBJECT_ID(subjectId.toString()),
+      ],
     });
     return created;
   }
