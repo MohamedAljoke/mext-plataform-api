@@ -9,11 +9,16 @@ import typesRoutes from "./routes/Types.routes";
 import questionRoutes from "./routes/Question.routes";
 import userQuestionsRoutes from "./routes/UserQuestions.routes";
 import usersRoutes from "./routes/User.routes";
+import HealthCheck from "@ioc:Adonis/Core/HealthCheck";
 
 Route.get("/version", async () => {
   return { version: "0.2" };
 });
+Route.get("/health", async ({ response }) => {
+  const report = await HealthCheck.getReport();
 
+  return report.healthy ? response.ok(report) : response.badRequest(report);
+});
 Route.get("/", async ({ response }) => {
   return response.redirect("/docs");
 });

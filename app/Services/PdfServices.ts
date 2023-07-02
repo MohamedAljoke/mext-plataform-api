@@ -1,16 +1,33 @@
 import Lecture from "App/Models/Lecture";
 import Pdf from "App/Models/Pdf";
 import Type from "App/Models/Type";
+import { redisKeys, timmerInSeconds } from "App/cache/redis/redisConstants";
+import {
+  parseCachedData,
+  removeCache,
+  stringifyCacheData,
+} from "App/cache/redis/redisUtils";
 
 export default class PdfsServices {
   constructor() {}
   public async fetchPdfsService() {
+    const cachedPdf = await parseCachedData({
+      key: redisKeys.PDF_LIST,
+    });
+    if (cachedPdf) {
+      return cachedPdf;
+    }
     const pdfs = await Pdf.query();
     await Promise.all(
       pdfs?.map(async (pdf) => {
         await pdf.load("types");
       })
     );
+    await stringifyCacheData({
+      data: pdfs,
+      timmer: timmerInSeconds.ONE_DAY,
+      key: redisKeys.PDF_LIST,
+    });
     return pdfs;
   }
   public async savePdfService({
@@ -34,10 +51,16 @@ export default class PdfsServices {
         .related("lectuers")
         .attach(lectrue.map((lectrue) => lectrue.id));
     }
+    await removeCache({
+      keys: [redisKeys.PDF_LIST()],
+    });
     return addedPdf;
   }
   public async deletePdfService(id: number) {
     const data = await Pdf.query().where({ id }).delete();
+    await removeCache({
+      keys: [redisKeys.PDF_LIST()],
+    });
     return data;
   }
   public async updatePdfService({
@@ -64,6 +87,9 @@ export default class PdfsServices {
       await pdf.related("types").sync(types.map((type) => type.id));
     }
     await pdf.save();
+    await removeCache({
+      keys: [redisKeys.PDF_LIST()],
+    });
     return pdf;
   }
 }

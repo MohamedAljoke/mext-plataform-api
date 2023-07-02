@@ -33,4 +33,9 @@ export default Env.rules({
   MYSQL_DB_NAME: Env.schema.string(),
   FRONT_URL: Env.schema.string(),
   FRONT_ADMIN_URL: Env.schema.string(),
+  //redis
+  REDIS_CONNECTION: Env.schema.enum(["local"] as const),
+  REDIS_HOST: Env.schema.string({ format: "host" }),
+  REDIS_PORT: Env.schema.number(),
+  REDIS_PASSWORD: Env.schema.string.optional(),
 });
