@@ -37,5 +37,7 @@ export const stringifyCacheData = async ({
   await Redis.set(key, stringifyedData, "EX", timmer);
 };
 export const removeCache = async ({ keys }: { keys: string[] }) => {
-  await Redis.del(keys);
+  try {
+    await Redis.del(keys);
+  } catch (e) {}
 };
