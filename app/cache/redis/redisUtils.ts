@@ -36,20 +36,12 @@ export const stringifyCacheData = async ({
     : JSON.stringify(data);
   await Redis.set(key, stringifyedData, "EX", timmer);
 };
-export const removeCache = async ({
-  keys,
-  hardClean,
-}: {
-  keys: string[];
-  hardClean?: boolean;
-}) => {
+export const removeCache = async ({ keys }: { keys: string[] }) => {
   try {
     await Redis.del(keys);
-    if (hardClean) {
-      const keys = await Redis.keys("*"); // Get all keys matching the pattern
-      if (keys.length > 0) {
-        await Redis.del(keys); // Delete the keys
-      }
+    const deleteKey = await Redis.keys("*"); // Get all keys matching the pattern
+    if (deleteKey.length > 0) {
+      await Redis.del(deleteKey); // Delete the keys
     }
   } catch (e) {}
 };

@@ -55,7 +55,6 @@ export default class SubjectsServices {
         redisKeys.SUBJECT_BY_ID(id.toString()),
         redisKeys.CHAPTER_BY_SUBJECT_ID(id.toString()),
       ],
-      hardClean: true,
     });
     return data;
   }

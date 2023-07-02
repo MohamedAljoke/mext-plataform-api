@@ -115,7 +115,6 @@ export default class LecturesServices {
         redisKeys.LECTURE_BY_ID(id.toString()),
         redisKeys.LECTURE_BY_CHAPTER_ID(lecture.chapterId.toString()),
       ],
-      hardClean: true,
     });
     return data;
   }

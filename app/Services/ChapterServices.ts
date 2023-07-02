@@ -68,7 +68,6 @@ export default class ChapterServices {
         redisKeys.CHAPTER_BY_ID(id.toString()),
         redisKeys.CHAPTER_BY_SUBJECT_ID(chapter.subjectId.toString()),
       ],
-      hardClean: true,
     });
     return data;
   }
