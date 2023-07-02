@@ -109,7 +109,15 @@ export default class LecturesServices {
   }
 
   public async deleteLectureService(id: number) {
-    const data = await Lecture.query().where({ id }).delete();
+    const lecture = await Lecture.findOrFail(id);
+    const data = await lecture.delete();
+    await removeCache({
+      keys: [
+        redisKeys.LECTURES_LIST(),
+        redisKeys.LECTURE_BY_ID(id.toString()),
+        redisKeys.LECTURE_BY_CHAPTER_ID(lecture.chapterId.toString()),
+      ],
+    });
     return data;
   }
   public async createLectureService({
@@ -125,6 +133,9 @@ export default class LecturesServices {
       await lectuers.related("pdfs").attach(pdfs.map((role) => role.id));
       await lectuers.load("pdfs");
     }
+    await removeCache({
+      keys: [redisKeys.LECTURES_LIST()],
+    });
     return lectuers;
   }
 }
