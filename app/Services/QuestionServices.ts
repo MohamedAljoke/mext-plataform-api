@@ -14,7 +14,6 @@ export default class QuestionServices {
       .preload("alternatives")
       .preload("lectuers")
       .preload("types");
-
     return question[0];
   }
   public async fetchAllQuestionsService() {
