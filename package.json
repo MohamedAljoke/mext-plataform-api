@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "local":"sh local.sh",
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
     "start": "node build/server.js",
     "coverage": "c8 node ace test",
     "migration:run": "node ace migration:run",
-    "test": "clear && node ace test"
+    "test": "clear && node ace test",
+    "deploy":"fly deploy"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.5",

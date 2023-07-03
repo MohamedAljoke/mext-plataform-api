@@ -2,7 +2,37 @@
 
 This is the server for the mext application built with Adonis, a Node.js web framework.
 
+## Table of Contents
+
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [Local](#local)
+    - [Development](#development)
+- [Deployment](#deployment)
+
+## Getting Started
+
+Create .env file with the .env.example
+
+### Prerequisites
+
+Make sure you have the following software installed before running the app:
+
+- [Node.js](https://nodejs.org/) (version 16 or higher)
+- [npm](https://www.npmjs.com/) (version 8.19.3 or higher)
+
 ## Installation
+
+### Local
+
+Run:
+
+```bash
+npm run local
+```
+
+### Development
 
 1. Clone the repository:
 
@@ -19,16 +49,22 @@ This is the server for the mext application built with Adonis, a Node.js web fra
 
    ```
 
-3. Create .env file with the .env.example
-4. CD to the docker file and run the docker:
+3. run the docker:
 
-   ```bash
-   cd docker
-   docker-compose up -d
+```bash
+docker-compose up -d
 
-   ```
+```
 
 5. Run database migration:
    ```bash
    node ace migration:run
    ```
+
+## Deployment
+
+Run:
+
+```bash
+npm run deploy
+```
