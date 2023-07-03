@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "local":"sh local.sh",
+    "local":"sh ./scripts/local.sh",
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
     "start": "node build/server.js",

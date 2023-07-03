@@ -1,9 +1,4 @@
 #!/bin/bash
-
-# Start container
-docker-compose up -d
-
-# Check if MySQL is up
 start_time=$(date +%s)
 password="mextmysql"
 while true; do
@@ -21,8 +16,3 @@ while true; do
         sleep 5
     fi
 done
-
-# Run migrations
-node ace migration:run
-
-echo "Done."
