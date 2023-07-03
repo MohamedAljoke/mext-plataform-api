@@ -1,21 +1,7 @@
 version: '3.8'
 services:
-  mext-back:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - ${PORT}:${PORT}
-    env_file:
-      - .env
-    depends_on:
-      - database-mext-mysql
-    networks:
-      - my-network
-    command: sh -c "node ace migration:run"
-
   database-mext-mysql:
-    container_name: mext_db
+    container_name: database-mext-mysql
     image: mysql:8.0
     restart: always
     environment:
@@ -31,6 +17,25 @@ services:
       - my-db:/var/lib/mysql
     networks:
       - my-network
+  mext-back:
+    container_name: mext-back
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+      MYSQL_HOST: host.docker.internal
+    command: sh -c "node ace migration:run"
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    depends_on:
+      - database-mext-mysql
+    networks:
+      - my-network
+    
+
   mext_redis:
     image: redis:alpine
     restart: always
