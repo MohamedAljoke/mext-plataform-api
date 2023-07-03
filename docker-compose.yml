@@ -1,7 +1,8 @@
 version: '3.8'
 services:
-  database-mext-mysql:
-    container_name: database-mext-mysql
+  database_mext_mysql:
+    hostname: database_mext_mysql
+    container_name: database_mext_mysql
     image: mysql:8.0
     restart: always
     environment:
@@ -17,21 +18,24 @@ services:
       - my-db:/var/lib/mysql
     networks:
       - my-network
+    
+
   mext-back:
     container_name: mext-back
+    hostname: mext-back
     build:
       context: .
       dockerfile: Dockerfile
     environment:
       NODE_ENV: development
       MYSQL_HOST: host.docker.internal
-    command: sh -c "node ace migration:run"
+    # command: sh -c "node ace migration:run"
     ports:
       - ${PORT}:${PORT}
     env_file:
       - .env
     depends_on:
-      - database-mext-mysql
+      - database_mext_mysql
     networks:
       - my-network
     
