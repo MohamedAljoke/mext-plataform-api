@@ -21,6 +21,7 @@ Make sure you have the following software installed before running the app:
 
 - [Node.js](https://nodejs.org/) (version 16 or higher)
 - [npm](https://www.npmjs.com/) (version 8.19.3 or higher)
+- [Docker](https://www.docker.com/)
 
 ## Installation
 
