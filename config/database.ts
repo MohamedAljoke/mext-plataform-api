@@ -47,7 +47,7 @@ const databaseConfig: DatabaseConfig = {
             : Env.get("DB_USER", PROD_MYSQL_DB.username),
         password:
           Env.get("NODE_ENV") === "development"
-            ? Env.get("MYSQL_PASSWORD", "")
+            ? Env.get("MYSQL_PASSWORD")
             : Env.get("DB_PASSWORD", PROD_MYSQL_DB.password),
         database:
           Env.get("NODE_ENV") === "development"

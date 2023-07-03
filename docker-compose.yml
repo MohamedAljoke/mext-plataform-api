@@ -1,32 +1,36 @@
 version: '3.8'
 services:
-  my-app:
+  mext-back:
     build:
       context: .
       dockerfile: Dockerfile
-    
     ports:
       - ${PORT}:${PORT}
     env_file:
       - .env
     depends_on:
       - database-mext-mysql
+    networks:
+      - my-network
+    command: sh -c "node ace migration:run"
 
   database-mext-mysql:
     container_name: mext_db
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: 'mext'
-      MYSQL_USER: 'mext'
-      MYSQL_PASSWORD: 'mextmysql'
-      MYSQL_DB_NAME: 'mext'
+      MYSQL_DATABASE: ${MYSQL_DB_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - '3306:3306'
+      - ${MYSQL_PORT}:${MYSQL_PORT}
     expose:
-      - '3306'
+      - ${MYSQL_PORT}
     volumes:
       - my-db:/var/lib/mysql
+    networks:
+      - my-network
   mext_redis:
     image: redis:alpine
     restart: always
@@ -34,6 +38,13 @@ services:
       - .env
     ports:
       - '6379:6379'
+    networks:
+      - my-network
+      
 volumes:
   my-db:
     driver: local
+
+networks:
+  my-network:
+    driver: bridge
