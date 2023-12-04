@@ -1,3 +1,4 @@
+
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
@@ -33,8 +34,8 @@ RUN apt-get update -qq && \
     apt-get install -y python-is-python3 pkg-config build-essential 
 
 # Install node modules
-COPY --link package-lock.json package.json ./
-RUN npm ci --include=dev
+COPY --link package.json ./
+RUN npm install --include=dev
 
 # Copy application code
 COPY --link . .
@@ -51,9 +52,9 @@ COPY --from=build /app /app
 RUN mkdir -p /app/tmp/uploads
 VOLUME /app/tmp/uploads
 # Entrypoint sets up the container.
-ENTRYPOINT [ "/app/docker-entrypoint.js" ]
+ENTRYPOINT ["node", "/app/docker-entrypoint.js" ]
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
+EXPOSE 8000
 
 CMD [ "node", "/app/build/server.js" ]
