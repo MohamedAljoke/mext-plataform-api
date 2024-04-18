@@ -51,10 +51,5 @@ COPY --from=build /app /app
 
 RUN mkdir -p /app/tmp/uploads
 VOLUME /app/tmp/uploads
-# Entrypoint sets up the container.
-ENTRYPOINT ["node", "/app/docker-entrypoint.js" ]
-
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 8000
 
 CMD [ "node", "/app/build/server.js" ]
