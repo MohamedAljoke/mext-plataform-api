@@ -27,12 +27,7 @@ jobs:
           MYSQL_USER: ${{ env.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
           MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PASSWORD }}
-        options: >-
-          --name=mysql-master
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+
     steps:
      - uses: actions/checkout@v2
      - name: Install node_modules
@@ -43,3 +38,5 @@ jobs:
        run: npm run test
      - name: build project
        run: npm run build
+    
+    
