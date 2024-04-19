@@ -1,0 +1,55 @@
+stages:
+    - build
+    - test
+    - deploy
+    - post deploy
+    
+
+variables:
+    file_name: index.html
+    APP_BASE_URL: http://moham-20230308.s3-website-us-east-1.amazonaws.com
+
+build:
+    image: node:16-alpine
+    stage: build
+    script:
+        - yarn install
+        - yarn lint
+        - yarn run test
+        - yarn build
+    artifacts:
+        paths:
+            - build
+
+         
+test build website:
+    image: node:16-alpine
+    stage: test
+    script:
+        - test -f build/$file_name
+        - yarn global add serve
+        - apk add curl
+        - serve -s build &
+        - sleep 10
+        - curl http://localhost:3000 | grep "React App"
+
+deploy to s3:
+    stage: deploy
+    image:
+        name: amazon/aws-cli:2.4.11
+        entrypoint: [""]
+    only:
+        - main
+    script:
+        - aws --version
+        - echo "Hello S3" >  test.txt
+        - aws s3 sync build s3://$AWS_S3_BUCKET --delete
+
+
+production tests:
+    stage: post deploy
+    image: curlimages/curl
+    only:
+        - main
+    script:
+        - curl $APP_BASE_URL  | grep "React App"
