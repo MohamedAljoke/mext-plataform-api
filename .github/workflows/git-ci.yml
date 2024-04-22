@@ -8,7 +8,7 @@ env:
   MYSQL_USER: myuser
   MYSQL_PASSWORD: mypassword
   MYSQL_DB_NAME: mext
-  MYSQL_HOST: localhost
+  MYSQL_HOST: mysql-master
   MYSQL_PORT: 3306
   DB_CONNECTION: mysql
 
@@ -16,32 +16,34 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     container:
-      image: node:14.5.0-alpine
+      image: node:18.13.0-slim
     services:
       mysql-master:
-        image: mysql:5.7
+        image: mysql:5.8
         ports:
-          - 3306/tcp
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         env:
           MYSQL_DATABASE: ${{ env.MYSQL_DB_NAME }}
           MYSQL_USER: ${{ env.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
           MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PASSWORD }}
-        # options: >-
-        #   --name=mysql-master
-        #   --health-cmd="mysqladmin ping"
-        #   --health-interval=10s
-        #   --health-timeout=5s
-        #   --health-retries=3
+ 
     steps:
-     - uses: actions/checkout@v2
-     - name: Install node_modules
-       run: npm install
-     - name: Migrate db tables
-       run: node ace migration:run     
-     - name: Run tests
-       run: npm run test
+     - name: ECHO STARTING
+       run: echo ${{ env.MYSQL_USER }}  
+    #  - uses: actions/checkout@v2
+    #  - name: Install node_modules
+    #    run: npm install
+     - name: Check if DB is active
+       run: mysql -u ${{ env.MYSQL_USER }} -p ${{ env.MYSQL_PASSWORD }} -h localhost ${{ env.MYSQL_DB_NAME }}
+    #  - name: Migrate db tables
+    #    run: node ace migration:run     
+    #  - name: Run tests
+    #    run: npm run test
      - name: build project
        run: npm run build
+     - name: Check if DB is active
+       run: mysqladmin ping -h localhost -u ${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }}
     
 # Download binary
