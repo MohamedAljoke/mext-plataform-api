@@ -31,11 +31,15 @@ jobs:
      - name: Verify MySQL Connection
        run: |
         mysql -h 127.0.0.1 -P 3306 -u ${{ env.MYSQL_USER }} --password=${{ env.MYSQL_PASSWORD }} -e "SHOW DATABASES;"
-    #  - name: Install node_modules
-    #    run: npm install
-    #  - name: Migrate db tables
-    #    run: node ace migration:run     
-    #  - name: Run tests
-    #    run: npm run test
-    #  - name: build project
-    #    run: npm run build
+     - name: Setup Node.js
+       uses: actions/setup-node@v3
+       with:
+        node-version: '18'
+     - name: Install node_modules
+       run: npm install
+     - name: Migrate db tables
+       run: node ace migration:run     
+     - name: Run tests
+       run: npm run test
+     - name: build project
+       run: npm run build
