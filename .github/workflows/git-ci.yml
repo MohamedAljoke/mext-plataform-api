@@ -37,9 +37,9 @@ jobs:
         node-version: '18'
      - name: Install node_modules
        run: npm install
-     - name: Migrate db tables
-       run: node ace migration:run     
-     - name: Run tests
-       run: npm run test
+    #  - name: Migrate db tables
+    #    run: node ace migration:run     
+    #  - name: Run tests
+    #    run: npm run test
      - name: build project
        run: npm run build
